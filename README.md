@@ -219,13 +219,13 @@ Runtime JSON 中最重要的字段包括：
 #### Demo 1：统一 Agent Studio Web（推荐）
 
 ```bash
-python ai_web/server_1.py
+python ai_web/server_2.py
 ```
 
 浏览器打开 `http://127.0.0.1:8010/`。远程服务器运行时需要转发 8010 端口。可通过以下命令关闭模型预热：
 
 ```bash
-python ai_web/server.py --no-warmup
+python ai_web/server_2.py --no-warmup
 ```
 
 #### Demo 2：无 GPU 的 Mock 完整链路
