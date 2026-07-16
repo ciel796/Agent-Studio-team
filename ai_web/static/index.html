@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Studio</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sidebar-bg: #111827;
+      --sidebar-hover: #1f2937;
+      --sidebar-text: #9ca3af;
+      --sidebar-active: #f3f4f6;
+      --accent: #0d9488;
+      --accent-light: #14b8a6;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-hover: #f1f5f9;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 8px 24px rgba(15,23,42,0.10);
+      --radius: 14px;
+      --radius-sm: 10px;
+    }
+    body {
+      font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+    }
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      padding: 16px 0;
+    }
+    .sidebar-brand {
+      padding: 0 20px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #374151;
+      margin-bottom: 10px;
+    }
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .brand-text {
+      color: #fff;
+      font-weight: 650;
+      font-size: 15px;
+      letter-spacing: 0.2px;
+    }
+    .sidebar-nav {
+      padding: 0 12px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--sidebar-text);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+      user-select: none;
+    }
+    .nav-item:hover { background: var(--sidebar-hover); color: #d1d5db; }
+    .nav-item.active { background: #374151; color: var(--sidebar-active); }
+    .nav-badge {
+      margin-left: auto;
+      font-size: 10px;
+      padding: 1px 7px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      font-weight: 650;
+    }
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 14px 20px;
+      border-top: 1px solid #374151;
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+    .model-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      padding: 6px 10px;
+      background: #1f2937;
+      border-radius: var(--radius-sm);
+      color: #9ca3af;
+      font-size: 11px;
+    }
+    .model-chip .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .top-bar {
+      height: 62px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow);
+    }
+    .page-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .status-chips {
+      display: flex;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .chip {
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .content {
+      flex: 1;
+      overflow: auto;
+      padding: 20px;
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .card-header {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .card-body { padding: 18px; }
+    .btn {
+      appearance: none;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 650;
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-outline {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--ink);
+    }
+    .btn-row { display: flex; gap: 10px; align-items: center; }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 13px;
+      outline: none;
+      background: var(--surface);
+      color: var(--ink);
+    }
+    textarea { resize: none; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; }
+    th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 650;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+    }
+    .tag-success { border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.08); }
+    .tag-warning { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.10); }
+    .tag-danger { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.10); }
+    .grid-2 { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 340px; gap: 18px; }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel-header { padding: 14px 16px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 13px; }
+    .panel-body { padding: 14px 16px; }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+    .muted { color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 12px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .kpi-val { font-size: 22px; font-weight: 800; }
+    .kpi-label { margin-top: 4px; font-size: 11px; color: var(--muted); }
+    .chat-shell {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 620px;
+    }
+    .chat-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-header-left { display: flex; gap: 10px; align-items: center; }
+    .chat-header-title { font-weight: 800; font-size: 14px; }
+    .chat-header-sub { color: var(--muted); font-size: 12px; }
+    .chat-messages {
+      flex: 1;
+      overflow: auto;
+      padding: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .msg {
+      max-width: 86%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .msg.user { align-self: flex-end; background: #f1f5f9; }
+    .msg.assistant { align-self: flex-start; background: #fff; }
+    .msg.tool { align-self: flex-start; background: #fffbeb; }
+    .msg.thinking { color: var(--muted); }
+    .thinking-text { display: flex; align-items: center; min-height: 20px; }
+    .thinking-dots::after {
+      display: inline-block;
+      width: 1.5em;
+      content: "";
+      animation: thinking-dots 1.2s steps(4, end) infinite;
+    }
+    @keyframes thinking-dots {
+      0% { content: ""; }
+      25% { content: "."; }
+      50% { content: ".."; }
+      75%, 100% { content: "..."; }
+    }
+    .role-label { font-size: 10px; font-weight: 800; margin-bottom: 6px; color: var(--muted); letter-spacing: 0.03em; }
+    .chat-input {
+      padding: 12px 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      background: var(--surface);
+    }
+    .chat-input textarea { height: 44px; }
+    .form-inline { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .timeline { display: flex; flex-direction: column; gap: 10px; }
+    .t-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: 44px 70px 1fr 70px;
+      gap: 10px;
+      align-items: start;
+      font-size: 12px;
+    }
+    .t-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+    .t-role { font-weight: 700; color: var(--muted); text-transform: lowercase; }
+    .t-meta { text-align: right; color: var(--muted); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .eval-top {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .eval-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .eval-card-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .eval-card-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .eval-card-body { padding: 16px; }
+    .eval-metric-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .eval-metric-table td {
+      padding: 11px 6px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .eval-metric-table tr:last-child td { border-bottom: 0; }
+    .metric-name {
+      width: 34%;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .metric-col {
+      width: 33%;
+      text-align: center;
+    }
+    .metric-head {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      margin-bottom: 6px;
+    }
+    .metric-num {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .metric-num.success { color: #16a34a; }
+    .metric-num.danger { color: #dc2626; }
+    .metric-num.warning { color: #d97706; }
+    .metric-sub {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .plan-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .summary-stat {
+      border: 1px solid var(--border);
+      background: #fafcfd;
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .summary-stat .value {
+      display: block;
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f766e;
+      line-height: 1.1;
+    }
+    .summary-stat .label {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .eval-detail-table td {
+      vertical-align: middle;
+      font-size: 12px;
+    }
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: #fff7ed;
+      color: #b45309;
+    }
+    .mini-badge.plan { background: #fef3c7; color: #92400e; }
+    .mini-badge.multi { background: #fff7ed; color: #c2410c; }
+    .mini-badge.single { background: #fef3c7; color: #a16207; }
+    .mini-badge.qa { background: #f8fafc; color: #64748b; }
+    @media (max-width: 1100px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .eval-top { grid-template-columns: 1fr; }
+      .plan-summary-grid { grid-template-columns: 1fr; }
+      .sidebar { width: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">A</div>
+      <div class="brand-text">Agent Studio</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-page="chat">对话 <span class="nav-badge" id="nav-badge-chat">New</span></div>
+      <div class="nav-item" data-page="tools">工具管理</div>
+      <div class="nav-item" data-page="memory">记忆管理</div>
+      <div class="nav-item" data-page="config">模型配置</div>
+      <div class="nav-item" data-page="trace">执行追踪</div>
+      <div class="nav-item" data-page="eval">评估分析</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="sidebar-version">Agent v1.0</div>
+      <div class="model-chip"><span class="dot"></span><span id="sidebar-model">local</span></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top-bar">
+      <div class="page-title" id="page-title">对话</div>
+      <div class="status-chips">
+        <span class="chip" id="chip-mode">mode: -</span>
+        <span class="chip" id="chip-toolset">toolset: -</span>
+        <span class="chip" id="chip-model">model: -</span>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="page active" id="page-chat">
+        <div class="grid-3">
+          <div class="chat-shell">
+            <div class="chat-header">
+              <div class="chat-header-left">
+                <div>
+                  <div class="chat-header-title">新对话</div>
+                  <div class="chat-header-sub" id="chat-subtitle">mock / integrated 均可运行</div>
+                </div>
+              </div>
+              <div class="btn-row">
+                <button class="btn btn-outline" id="btn-chat-clear">清空</button>
+                <button class="btn btn-outline" id="btn-chat-load-latest">加载最近一次</button>
+              </div>
+            </div>
+            <div class="chat-messages" id="chat-messages"></div>
+            <div class="chat-input">
+              <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+                <div class="form-inline">
+                  <select id="chat-llm-mode">
+                    <option value="mock">mock</option>
+                    <option value="prompt_json">prompt_json</option>
+                    <option value="native_tools">native_tools</option>
+                    <option value="adaptive">adaptive</option>
+                  </select>
+                  <select id="chat-save-memory">
+                    <option value="none">save_memory: none</option>
+                    <option value="conversation">save_memory: conversation</option>
+                    <option value="global">save_memory: global</option>
+                  </select>
+                </div>
+                <textarea id="chat-input" placeholder="输入你的问题..."></textarea>
+              </div>
+              <button class="btn" id="btn-send" style="width:110px;">发送</button>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="panel">
+              <div class="panel-header">可用工具</div>
+              <div class="panel-body">
+                <div class="stack" id="panel-tools"></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">已加载记忆</div>
+              <div class="panel-body">
+                <div class="stack" id="panel-memory"></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">运行状态</div>
+              <div class="panel-body">
+                <div class="muted" id="panel-runtime">等待运行</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-tools">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">工具管理</div>
+            <div class="btn-row">
+              <select id="tools-toolset" style="width:200px;"></select>
+              <button class="btn btn-outline" id="btn-tools-reload">重新加载</button>
+              <button class="btn btn-outline" id="btn-tools-auto">参数: tools_yaml</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="muted" id="tools-meta"></div>
+            <div style="height:12px;"></div>
+            <table>
+              <thead>
+                <tr>
+                  <th>工具名</th>
+                  <th>描述</th>
+                  <th>必选参数</th>
+                </tr>
+              </thead>
+              <tbody id="tools-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-memory">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">记忆检索</div>
+              <div class="btn-row">
+                <button class="btn btn-outline" id="btn-mem-mode">keyword</button>
+                <button class="btn btn-outline" id="btn-mem-search">搜索</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div style="display:flex;gap:10px;align-items:center;">
+                <input id="mem-query" placeholder="输入关键词..." />
+                <input id="mem-topk" value="5" style="width:90px;" />
+              </div>
+              <div style="height:12px;"></div>
+              <div class="stack" id="mem-results"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">记忆索引</div></div>
+            <div class="card-body">
+              <div class="muted" id="mem-index-meta"></div>
+              <div style="height:12px;"></div>
+              <table>
+                <thead>
+                  <tr><th>ID</th><th>类型</th><th>标题</th></tr>
+                </thead>
+                <tbody id="mem-index-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-config">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">模型配置</div>
+              <div class="btn-row">
+                <button class="btn btn-outline" id="btn-config-reload">重新加载</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="stack">
+                <div>
+                  <div class="muted">configs/model.yaml</div>
+                  <div style="height:8px;"></div>
+                  <textarea id="config-model-yaml" class="mono" style="height:420px;"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">运行开关</div></div>
+            <div class="card-body">
+              <div class="stack">
+                <div class="panel">
+                  <div class="panel-header">说明</div>
+                  <div class="panel-body">
+                    <div class="muted">当前 UI 仅做展示与联调入口，具体开关以后端 configs 为准。</div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-header">Plan 状态</div>
+                  <div class="panel-body">
+                    <div class="muted" id="config-plan-state">暂无</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-trace">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">执行追踪</div>
+            <div class="btn-row">
+              <button class="btn btn-outline" id="btn-trace-load">加载最近一次</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="kpi-row" style="margin-bottom:14px;">
+              <div class="kpi"><div class="kpi-val" id="kpi-llm">-</div><div class="kpi-label">LLM Calls</div></div>
+              <div class="kpi"><div class="kpi-val" id="kpi-tools">-</div><div class="kpi-label">Tool Rounds</div></div>
+              <div class="kpi"><div class="kpi-val" id="kpi-tokens">-</div><div class="kpi-label">Tokens</div></div>
+              <div class="kpi"><div class="kpi-val" id="kpi-time">-</div><div class="kpi-label">耗时</div></div>
+              <div class="kpi"><div class="kpi-val" id="kpi-status">-</div><div class="kpi-label">Status</div></div>
+            </div>
+            <div class="timeline" id="trace-timeline"></div>
+            <div style="height:12px;"></div>
+            <div class="muted" id="trace-meta"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-eval">
+        <div class="eval-top">
+          <div class="eval-card">
+            <div class="eval-card-header">
+              <div class="eval-card-title">单轮工具调用评估</div>
+              <div class="btn-row">
+                <span class="metric-head">prompt_json</span>
+                <span class="metric-head">native_tools</span>
+              </div>
+            </div>
+            <div class="eval-card-body">
+              <table class="eval-metric-table">
+                <tbody id="eval-single"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="eval-card">
+            <div class="eval-card-header">
+              <div class="eval-card-title">Plan-and-Execute 评估</div>
+              <span class="metric-head" id="eval-plan-case-badge">3 cases</span>
+            </div>
+            <div class="eval-card-body">
+              <table>
+                <thead><tr><th>用例</th><th>步骤</th><th>完成率</th><th>重规划</th></tr></thead>
+                <tbody id="eval-plan"></tbody>
+              </table>
+              <div class="plan-summary-grid" id="eval-plan-summary"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">测试用例详情</div>
+          </div>
+          <div class="card-body">
+            <table class="eval-detail-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>标题</th>
+                  <th>类别</th>
+                  <th>期望工具</th>
+                  <th>实际工具</th>
+                  <th>匹配</th>
+                  <th>成功</th>
+                </tr>
+              </thead>
+              <tbody id="eval-cases"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="/app.js?v=20260711-2"></script>
+</body>
+</html>

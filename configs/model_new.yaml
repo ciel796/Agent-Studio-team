@@ -1,0 +1,73 @@
+runtime:
+  default_mode: prompt_json
+
+model:
+  backend: transformers
+  model_name_or_path: /root/siton-tmp/assignment_B/Qwen3.5-4B
+  tokenizer_name_or_path: /root/siton-tmp/assignment_B/Qwen3.5-4B
+  local_files_only: true
+  trust_remote_code: true
+  torch_dtype: bfloat16
+  device_map: auto
+
+routing:
+  enabled: true
+  default_profile: default
+  plan_profile: planner
+  execute_profile: default
+
+model_pool:
+  default:
+    model_name_or_path: /root/siton-tmp/assignment_B/Qwen3.5-4B
+    tokenizer_name_or_path: /root/siton-tmp/assignment_B/Qwen3.5-4B
+    local_files_only: true
+    trust_remote_code: true
+    torch_dtype: bfloat16
+    device_map: auto
+  planner:
+    model_name_or_path: /root/siton-tmp/assignment_B/Qwen3.5-4B
+    tokenizer_name_or_path: /root/siton-tmp/assignment_B/Qwen3.5-4B
+    local_files_only: true
+    trust_remote_code: true
+    torch_dtype: bfloat16
+    device_map: auto
+  qwen_4b:
+    model_name_or_path: /root/siton-tmp/assignment_B/Qwen3.5-4B
+    tokenizer_name_or_path: /root/siton-tmp/assignment_B/Qwen3.5-4B
+    local_files_only: true
+    trust_remote_code: true
+    torch_dtype: bfloat16
+    device_map: auto
+  qwen_7b:
+    model_name_or_path: /root/siton-tmp/assignment_B/Qwen2.5-7B
+    tokenizer_name_or_path: /root/siton-tmp/assignment_B/Qwen2.5-7B
+    local_files_only: true
+    trust_remote_code: true
+    torch_dtype: bfloat16
+    device_map: auto
+
+generation:
+  max_new_tokens: 1024
+  do_sample: false
+  temperature: 0
+  top_p: 1
+
+context:
+  max_input_tokens: 4096
+
+tool_calling:
+  mode: prompt_json
+  comparison_reference_mode: prompt_json
+
+evaluation:
+  default_modes:
+    - prompt_json
+    - native_tools
+  default_profiles:
+    - qwen_4b
+    - qwen_7b
+
+outputs:
+  save_raw_output: true
+  save_ai_message: true
+  save_prompt_text: true
