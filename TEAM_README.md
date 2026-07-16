@@ -56,31 +56,7 @@ Agent Studio：本地文件驱动的工具增强型 Agent 系统
 
 ### 2.2 系统架构图
 
-```mermaid
-flowchart LR
-    U["用户 / 浏览器"] --> WEB["Agent Studio Web"]
-    WEB --> B1["B1 Agent Runtime"]
-
-    B1 -->|"检索相关记忆"| B5["B5 Memory"]
-    B5 -->|"MemoryResult"| B1
-
-    B1 -->|"获取 Tools Schema"| B3["B3 Tool Layer"]
-    B3 -->|"Tools Schema"| B1
-    B1 -->|"messages + schema"| B4["B4 Local LLM"]
-    B4 -->|"AIMessage / tool_calls"| B1
-
-    B1 -->|"ToolCall"| B3
-    B3 -->|"校验并执行"| B2["B2 Skills"]
-    B2 -->|"SkillResult"| B3
-    B3 -->|"ToolMessage"| B1
-    B1 -->|"工具证据"| B4
-    B4 -->|"最终 AIMessage"| B1
-
-    B1 --> OUT["答案、trace、checkpoint、日志"]
-    B1 -->|"可选保存"| B5
-    OUT --> WEB
-    WEB --> U
-```
+image1.png-> U
 
 完整数据流为：
 
