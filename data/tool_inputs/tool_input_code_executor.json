@@ -1,0 +1,6 @@
+{
+  "code": "import math\nvalues = [1, 2, 3, 4]\nprint('count', len(values))\nsum(values) + math.sqrt(16)",
+  "timeout_seconds": 3,
+  "allowed_imports": ["math"],
+  "work_dir": "sandbox"
+}

@@ -1,0 +1,4 @@
+[
+  {"role":"assistant","content":"ASK_USER: 请提供希望计算的两个整数。","tool_calls":[]},
+  {"role":"assistant","content":"收到补充信息，两个整数相加等于 12。","tool_calls":[]}
+]

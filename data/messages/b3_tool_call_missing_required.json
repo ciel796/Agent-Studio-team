@@ -1,0 +1,9 @@
+{
+  "tool_calls": [
+    {
+      "id": "call_001",
+      "name": "calculator",
+      "args": {}
+    }
+  ]
+}

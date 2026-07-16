@@ -1,0 +1,21 @@
+[
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_fixture_001",
+        "name": "file_reader",
+        "args": {
+          "path": "docs/agent_intro.txt",
+          "max_chars": 2000
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "三条中文要点如下：\n1. Agent 系统由模型、工具、记忆和执行循环组成。\n2. 工具调用让模型能够读取本地文件和执行计算。\n3. Memory 为后续决策提供全局知识和历史上下文。",
+    "tool_calls": []
+  }
+]

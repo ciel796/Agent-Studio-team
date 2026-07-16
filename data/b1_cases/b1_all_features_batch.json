@@ -1,0 +1,80 @@
+{
+  "tasks": [
+    {
+      "task_id": "multi_tool_loop",
+      "runtime_input": {
+        "conversation_id": "b1_case_multi_tool_loop",
+        "execution_mode": "fixture",
+        "user_input": "先读取 Agent 文档，再计算 6×7。",
+        "system_prompt_path": "../../prompts/local_tool_agent.txt",
+        "toolset": "basic_tools",
+        "max_turns": 3,
+        "save_memory": "none",
+        "tool_cache_enabled": true,
+        "fixtures": {
+          "selected_memory_path": "../b1_fixtures/preset_memory.json",
+          "tools_schema_path": "../../outputs/B3_tools/tools_schema.json",
+          "ai_messages_path": "ai_multi_loop.json",
+          "tool_messages_path": "tool_messages.json"
+        }
+      }
+    },
+    {
+      "task_id": "multi_turn_prompt_compression",
+      "runtime_input": {
+        "conversation_id": "b1_case_multi_turn",
+        "execution_mode": "fixture",
+        "user_inputs": ["第一轮问题", "第二轮问题", "第三轮问题"],
+        "system_prompt_path": "../../prompts/local_tool_agent.txt",
+        "system_prompt_events": [
+          {"user_turn_index":2,"mode":"add","label":"brief","content":"回答必须简洁。"},
+          {"user_turn_index":3,"mode":"switch","label":"strict","system_prompt_path":"../../prompts/strict_tool_prompt.txt"}
+        ],
+        "history_compression": {"enabled":true,"max_messages":4,"keep_recent_messages":2,"summary_max_chars":500},
+        "toolset": "basic_tools",
+        "max_turns": 3,
+        "save_memory": "none",
+        "fixtures": {
+          "selected_memory_path": "../b1_fixtures/preset_memory.json",
+          "tools_schema_path": "../../outputs/B3_tools/tools_schema.json",
+          "ai_messages_path": "ai_multi_turn.json",
+          "tool_messages_path": "tool_messages.json"
+        }
+      }
+    },
+    {
+      "task_id": "max_turns_guard",
+      "runtime_input": {
+        "conversation_id": "b1_case_max_turns",
+        "execution_mode": "fixture",
+        "user_input": "连续调用计算器。",
+        "system_prompt_path": "../../prompts/local_tool_agent.txt",
+        "toolset": "basic_tools",
+        "max_turns": 1,
+        "save_memory": "none",
+        "fixtures": {
+          "selected_memory_path": "../b1_fixtures/preset_memory.json",
+          "tools_schema_path": "../../outputs/B3_tools/tools_schema.json",
+          "ai_messages_path": "ai_max_turns.json",
+          "tool_messages_path": "tool_messages.json"
+        }
+      }
+    },
+    {
+      "task_id": "integrated_tool_cache",
+      "llm_mode": "mock",
+      "runtime_input": {
+        "conversation_id": "b1_case_tool_cache",
+        "execution_mode": "integrated",
+        "user_inputs": ["读取 Agent 文档。", "再次读取同一份 Agent 文档。"],
+        "system_prompt_path": "../../prompts/local_tool_agent.txt",
+        "selected_memory_ids": [],
+        "use_global_memory": false,
+        "toolset": "basic_tools",
+        "max_turns": 3,
+        "save_memory": "none",
+        "tool_cache_enabled": true
+      }
+    }
+  ]
+}

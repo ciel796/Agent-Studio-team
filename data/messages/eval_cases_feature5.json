@@ -1,0 +1,45 @@
+[
+  {
+    "id": "direct_answer_001",
+    "title": "直接回答类",
+    "category": "direct_answer",
+    "user_input": "请用一句中文解释什么是 tool calling。",
+    "expected_tools": []
+  },
+  {
+    "id": "single_tool_001",
+    "title": "单工具读取文档",
+    "category": "single_tool",
+    "user_input": "请读取 docs/agent_intro.txt，并给出三条中文要点。",
+    "expected_tools": ["file_reader"]
+  },
+  {
+    "id": "single_tool_002",
+    "title": "单工具计算",
+    "category": "single_tool",
+    "user_input": "请计算 23*17+9，如果需要工具请调用合适的计算工具。",
+    "expected_tools": ["calculator"]
+  },
+  {
+    "id": "multi_tool_001",
+    "title": "多工具并行读取",
+    "category": "multi_tool",
+    "user_input": "请同时阅读 docs/agent_intro.txt 和 docs/tool_calling.md，比较两个文档的关注点差异。如果需要工具，请在同一轮并行请求。",
+    "expected_tools": ["file_reader", "file_reader"]
+  },
+  {
+    "id": "planning_like_001",
+    "title": "规划倾向任务",
+    "category": "planning_like",
+    "user_input": "请先搜索 docs 目录中和 tool calling 最相关的文件，再读取最相关的结果并总结关键结论。",
+    "expected_tools": ["local_file_search", "file_reader"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "table_tool_001",
+    "title": "表格分析任务",
+    "category": "table_analysis",
+    "user_input": "请分析 tables/results.csv 的列结构和预览内容。",
+    "expected_tools": ["table_analyzer"]
+  }
+]

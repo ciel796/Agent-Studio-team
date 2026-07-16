@@ -1,0 +1,5 @@
+[
+  {"role": "system", "content": "You are a local agent."},
+  {"role": "user", "content": "什么是 Agent？"},
+  {"role": "assistant", "content": "Agent 会结合模型、工具和记忆完成任务。", "tool_calls": []}
+]

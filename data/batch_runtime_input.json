@@ -1,0 +1,39 @@
+{
+    "tasks":  [
+                  {
+                      "task_id":  "batch_read_intro",
+                      "outdir":  "batch_read_intro",
+                      "runtime_input":  {
+                                            "conversation_id":  "batch_read_intro",
+                                            "user_input":  "帮我阅读 docs/agent_intro.txt，总结三条中文要点。",
+                                            "system_prompt_path":  "../prompts/local_tool_agent.txt",
+                                            "selected_memory_ids":  [
+                                                                        "mem_conversation_conv_000"
+                                                                    ],
+                                            "use_global_memory":  true,
+                                            "toolset":  "basic_tools",
+                                            "max_turns":  3,
+                                            "save_memory":  "none"
+                                        }
+                  },
+                  {
+                      "task_id":  "batch_two_turns",
+                      "outdir":  "batch_two_turns",
+                      "runtime_input":  {
+                                            "conversation_id":  "batch_two_turns",
+                                            "user_inputs":  [
+                                                                "帮我阅读 docs/agent_intro.txt，总结三条中文要点。",
+                                                                "再读一次 docs/agent_intro.txt，继续总结三条中文要点。"
+                                                            ],
+                                            "system_prompt_path":  "../prompts/local_tool_agent.txt",
+                                            "selected_memory_ids":  [
+                                                                        "mem_conversation_conv_000"
+                                                                    ],
+                                            "use_global_memory":  true,
+                                            "toolset":  "basic_tools",
+                                            "max_turns":  3,
+                                            "save_memory":  "none"
+                                        }
+                  }
+              ]
+}

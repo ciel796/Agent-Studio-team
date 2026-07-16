@@ -1,0 +1,13 @@
+{
+  "tool_calls": [
+    {
+      "id": "call_001",
+      "name": "format_converter",
+      "args": {
+        "text": "name: Agent Demo\nskill: format_converter\nstatus: ready",
+        "target_format": "json",
+        "output_filename": "b3_format_converter_demo.json"
+      }
+    }
+  ]
+}

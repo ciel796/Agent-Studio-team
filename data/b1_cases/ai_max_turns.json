@@ -1,0 +1,4 @@
+[
+  {"role":"assistant","content":"","tool_calls":[{"id":"call_limit_1","name":"calculator","args":{"expression":"1 + 1"}}]},
+  {"role":"assistant","content":"","tool_calls":[{"id":"call_limit_2","name":"calculator","args":{"expression":"2 + 2"}}]}
+]

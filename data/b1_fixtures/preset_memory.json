@@ -1,0 +1,20 @@
+{
+  "status": "success",
+  "query": "帮我阅读 docs/agent_intro.txt，总结三条中文要点。",
+  "selected_memory_docs": [
+    {
+      "memory_id": "mem_fixture_001",
+      "memory_type": "global",
+      "title": "Fixture Agent 基础概念",
+      "path": "fixture://mem_fixture_001",
+      "content": "Agent 系统由模型、工具、记忆和执行循环组成。",
+      "original_chars": 27,
+      "included_chars": 27,
+      "truncated": false
+    }
+  ],
+  "max_memory_chars": 2000,
+  "total_chars": 27,
+  "truncated": false,
+  "errors": []
+}

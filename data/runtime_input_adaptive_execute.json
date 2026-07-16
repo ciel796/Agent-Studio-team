@@ -1,0 +1,18 @@
+{
+  "conversation_id": "conv_adaptive_execute_001",
+  "execution_mode": "integrated",
+  "agent_mode": "adaptive_execute",
+  "agent_options": {
+    "max_plan_steps": 6,
+    "evidence_policy": "lite",
+    "low_mode": "native_tools",
+    "high_mode": "prompt_json"
+  },
+  "user_input": "请先搜索 docs 目录中与 tool calling 最相关的文件，再读取最相关的 1~2 个文件，并用三条中文要点总结关键结论。",
+  "system_prompt_path": "../prompts/local_tool_agent.txt",
+  "selected_memory_ids": [],
+  "use_global_memory": false,
+  "toolset": "basic_tools",
+  "max_turns": 3,
+  "save_memory": "conversation"
+}

@@ -1,0 +1,15 @@
+{
+  "conversation_id":"b1_case_resume",
+  "execution_mode":"fixture",
+  "user_input":"5 和 7",
+  "system_prompt_path":"../../prompts/local_tool_agent.txt",
+  "toolset":"basic_tools",
+  "max_turns":3,
+  "save_memory":"none",
+  "fixtures":{
+    "selected_memory_path":"../b1_fixtures/preset_memory.json",
+    "tools_schema_path":"../../outputs/B3_tools/tools_schema.json",
+    "ai_messages_path":"ai_resume.json",
+    "tool_messages_path":"tool_messages.json"
+  }
+}

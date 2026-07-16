@@ -1,0 +1,6 @@
+{
+  "code": "print('too slow')",
+  "timeout_seconds": 5,
+  "allowed_imports": ["math"],
+  "work_dir": "sandbox"
+}

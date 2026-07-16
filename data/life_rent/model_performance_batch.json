@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    {
+      "task_id": "life_rent_complex_model_evaluation",
+      "llm_mode": "adaptive",
+      "runtime_input": {
+        "conversation_id": "life_rent_complex_eval_001",
+        "execution_mode": "integrated",
+        "agent_mode": "adaptive_execute",
+        "agent_options": {
+          "llm_mode": "adaptive",
+          "max_plan_steps": 8,
+          "evidence_policy": "strict",
+          "low_mode": "native_tools",
+          "high_mode": "prompt_json"
+        },
+        "user_input": "你是一名谨慎的租房决策顾问。请使用文件工具读取 life_rent/requirements.md、life_rent/listing_a.md、life_rent/listing_b.md、life_rent/listing_c.md 和 life_rent/chat_log_noise.txt，完成一次可审计的租房决策分析。不得只依赖文件名或常识，必须实际读取文件，并从聊天噪声中提取与房源有关的有效信息。\n\n任务要求：\n1. 先整理硬性条件、不接受条件和偏好条件；不得把偏好误判为硬性条件。\n2. 对 A、B、C 分别检查预算、通勤、独卫、楼层、隔音、采光、做饭、收纳、宠物和安全。每项标记为“满足/不满足/信息不足”，并给出文件证据。\n3. 识别 requirements、房源描述与聊天记录之间的重复、补充和潜在冲突；冲突信息不得擅自选择一方，必须说明风险及签约前如何核验。\n4. 设计透明的 100 分评分模型：硬性条件与不接受条件合计权重不得低于 65 分；列出每项权重、原始得分、扣分理由，再换算为 0-10 分。\n5. 计算每套房的首期最低现金支出，只计算租金和已明确的押付方式，不得虚构中介费、水电或其他费用；写出计算式。\n6. 做一次敏感性分析：分别在“预算优先”“安静与安全优先”“未来养猫优先”三种策略下给出排序，并解释排序为什么变化。\n7. 给出唯一的首选方案和一个备选方案。如果没有房源完全满足硬性条件，必须明确说明“没有完全合格房源”，不得强行宣称完美匹配。\n8. 为首选房源给出 5 条看房核验问题、3-5 条谈价/签约要点，以及一个明确的放弃条件。\n9. 单独列出仍缺失的信息，不得把未知信息写成确定事实。\n\n输出格式：\n- 第一部分：需求与评分方法\n- 第二部分：三套房源证据对照表\n- 第三部分：评分、首期现金计算与排序\n- 第四部分：三种策略的敏感性分析\n- 第五部分：最终建议、核验问题、谈价/签约要点与放弃条件\n- 第六部分：信息缺口与置信度\n\n证据要求：关键结论后用括号标注来源文件名，例如（listing_a.md）。回答应简洁但完整，禁止大段复述聊天噪声。",
+        "system_prompt_path": "../../prompts/local_tool_agent.txt",
+        "selected_memory_ids": [],
+        "use_global_memory": false,
+        "toolset": "basic_tools",
+        "max_turns": 8,
+        "save_memory": "none",
+        "tool_cache_enabled": true,
+        "history_compression": {
+          "enabled": true,
+          "max_messages": 14,
+          "keep_recent_messages": 6,
+          "summary_max_chars": 2400
+        }
+      }
+    }
+  ]
+}

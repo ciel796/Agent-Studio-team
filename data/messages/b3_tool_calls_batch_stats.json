@@ -1,0 +1,10 @@
+{
+  "tool_calls": [
+    {"id": "batch_calc_001", "name": "calculator", "args": {"expression": "10 + 5 * 2"}},
+    {"id": "batch_calc_002", "name": "calculator", "args": {"expression": "10 + 5 * 2"}},
+    {"id": "batch_read_001", "name": "file_reader", "args": {"path": "docs/agent_intro.txt", "max_chars": 500}},
+    {"id": "batch_missing_001", "name": "file_reader", "args": {"path": "docs/not_exists.txt", "max_chars": 500}},
+    {"id": "batch_search_001", "name": "local_file_search", "args": {"query": "Agent", "root_dir": "docs", "top_k": 3}},
+    {"id": "batch_limit_001", "name": "local_file_search", "args": {"query": "Agent", "root_dir": "docs", "top_k": 3, "max_files": 5000}}
+  ]
+}

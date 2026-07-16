@@ -1,0 +1,6 @@
+{
+  "path": "docs/agent_intro.txt",
+  "max_chars": 1000,
+  "target_format": "markdown",
+  "output_filename": "agent_intro_bullets.md"
+}

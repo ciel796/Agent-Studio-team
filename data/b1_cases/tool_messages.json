@@ -1,0 +1,6 @@
+{
+  "call_loop_1":{"role":"tool","tool_call_id":"call_loop_1","name":"file_reader","content":"{\"status\":\"success\",\"output\":{\"content\":\"Agent 由模型、工具、记忆和执行循环组成。\"}}","status":"success"},
+  "call_loop_2":{"role":"tool","tool_call_id":"call_loop_2","name":"calculator","content":"{\"status\":\"success\",\"output\":{\"result\":42}}","status":"success"},
+  "call_limit_1":{"role":"tool","tool_call_id":"call_limit_1","name":"calculator","content":"{\"status\":\"success\",\"output\":{\"result\":2}}","status":"success"},
+  "call_limit_2":{"role":"tool","tool_call_id":"call_limit_2","name":"calculator","content":"{\"status\":\"success\",\"output\":{\"result\":4}}","status":"success"}
+}

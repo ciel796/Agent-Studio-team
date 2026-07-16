@@ -1,0 +1,14 @@
+{
+  "tool_calls": [
+    {
+      "id": "call_composite_001",
+      "name": "read_convert_file",
+      "args": {
+        "path": "docs/agent_intro.txt",
+        "max_chars": 1000,
+        "target_format": "markdown",
+        "output_filename": "agent_intro_from_b3.md"
+      }
+    }
+  ]
+}

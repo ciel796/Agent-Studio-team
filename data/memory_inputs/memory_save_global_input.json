@@ -1,0 +1,7 @@
+{
+  "conversation_id": "demo_global_memory_001",
+  "save_type": "global",
+  "messages_path": "sample_messages.json",
+  "trace_path": "sample_trace.json",
+  "answer_path": "sample_final_answer.md"
+}

@@ -1,0 +1,10 @@
+{
+  "conversation_id": "conv_004",
+  "user_input": "请调用 table_analyzer Skill 分析 tables/results.csv，告诉我行数、列名，以及 score 和 latency 的平均值。",
+  "system_prompt_path": "../prompts/local_tool_agent.txt",
+  "selected_memory_ids": [],
+  "use_global_memory": false,
+  "toolset": "basic_tools",
+  "max_turns": 3,
+  "save_memory": "none"
+}

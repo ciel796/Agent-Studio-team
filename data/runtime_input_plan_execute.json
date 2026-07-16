@@ -1,0 +1,17 @@
+{
+  "conversation_id": "conv_plan_execute_001",
+  "execution_mode": "integrated",
+  "agent_mode": "plan_execute",
+  "agent_options": {
+    "llm_mode": "prompt_json",
+    "max_plan_steps": 6,
+    "evidence_policy": "lite"
+  },
+  "user_input": "请先搜索 docs 目录中与 Memory 最相关的文件名或内容片段，再读取最相关的结果并总结。",
+  "system_prompt_path": "../prompts/local_tool_agent.txt",
+  "selected_memory_ids": [],
+  "use_global_memory": false,
+  "toolset": "basic_tools",
+  "max_turns": 3,
+  "save_memory": "conversation"
+}

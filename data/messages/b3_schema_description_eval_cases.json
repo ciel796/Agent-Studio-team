@@ -1,0 +1,31 @@
+{
+  "cases": [
+    {
+      "case_id": "read_intro_file",
+      "expected_tool": "file_reader",
+      "expected_args": {"path": "docs/agent_intro.txt"},
+      "tool_calls_by_schema": {
+        "brief_schema": [{"id": "brief_001", "name": "local_file_search", "args": {"query": "agent_intro", "root_dir": "docs"}}],
+        "detailed_schema": [{"id": "detailed_001", "name": "file_reader", "args": {"path": "docs/agent_intro.txt", "max_chars": 2000}}]
+      }
+    },
+    {
+      "case_id": "calculate_expression",
+      "expected_tool": "calculator",
+      "expected_args": {"expression": "23 * 17 + 9"},
+      "tool_calls_by_schema": {
+        "brief_schema": [{"id": "brief_002", "name": "code_executor", "args": {"code": "23 * 17 + 9"}}],
+        "detailed_schema": [{"id": "detailed_002", "name": "calculator", "args": {"expression": "23 * 17 + 9"}}]
+      }
+    },
+    {
+      "case_id": "search_docs",
+      "expected_tool": "local_file_search",
+      "expected_args": {"query": "????"},
+      "tool_calls_by_schema": {
+        "brief_schema": [{"id": "brief_003", "name": "file_reader", "args": {"path": "docs/tool_calling.md"}}],
+        "detailed_schema": [{"id": "detailed_003", "name": "local_file_search", "args": {"query": "????", "root_dir": "docs", "top_k": 5}}]
+      }
+    }
+  ]
+}

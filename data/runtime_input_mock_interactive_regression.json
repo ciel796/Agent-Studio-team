@@ -1,0 +1,17 @@
+{
+    "conversation_id":  "conv_mock_interactive_regression",
+    "user_inputs":  [
+                        "帮我阅读 docs/agent_intro.txt，总结三条中文要点。",
+                        "什么是agent",
+                        "为了学习agent 我需要有什么前置知识",
+                        "123"
+                    ],
+    "system_prompt_path":  "../prompts/local_tool_agent.txt",
+    "selected_memory_ids":  [
+                                "mem_conversation_conv_000"
+                            ],
+    "use_global_memory":  true,
+    "toolset":  "basic_tools",
+    "max_turns":  3,
+    "save_memory":  "none"
+}

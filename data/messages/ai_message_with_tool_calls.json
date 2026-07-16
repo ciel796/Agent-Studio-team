@@ -1,0 +1,11 @@
+{
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_001",
+      "name": "file_reader",
+      "args": {"path": "docs/agent_intro.txt", "max_chars": 2000}
+    }
+  ]
+}

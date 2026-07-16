@@ -1,0 +1,22 @@
+{
+    "conversation_id":  "conv_history_compression_demo",
+    "user_inputs":  [
+                        "帮我阅读 docs/agent_intro.txt，总结三条中文要点。",
+                        "再读一次 docs/agent_intro.txt，继续总结三条中文要点。",
+                        "第三轮继续阅读 docs/agent_intro.txt，并用三条中文要点回答。"
+                    ],
+    "system_prompt_path":  "../prompts/local_tool_agent.txt",
+    "selected_memory_ids":  [
+                                "mem_conversation_conv_000"
+                            ],
+    "use_global_memory":  true,
+    "toolset":  "basic_tools",
+    "max_turns":  3,
+    "save_memory":  "none",
+    "history_compression":  {
+                                "enabled":  true,
+                                "max_messages":  6,
+                                "keep_recent_messages":  2,
+                                "summary_max_chars":  1200
+                            }
+}

@@ -1,0 +1,10 @@
+{
+  "conversation_id": "conv_002",
+  "user_input": "帮我计算56*29+81，调用计算Skill计算结果",
+  "system_prompt_path": "../prompts/local_tool_agent.txt",
+  "selected_memory_ids": [],
+  "use_global_memory": false,
+  "toolset": "basic_tools",
+  "max_turns": 3,
+  "save_memory": "conversation"
+}

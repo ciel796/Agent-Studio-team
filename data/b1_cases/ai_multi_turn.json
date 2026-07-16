@@ -1,0 +1,5 @@
+[
+  {"role":"assistant","content":"第一轮完成。","tool_calls":[]},
+  {"role":"assistant","content":"第二轮完成，已应用追加的 system prompt。","tool_calls":[]},
+  {"role":"assistant","content":"第三轮完成，已切换 system prompt。","tool_calls":[]}
+]

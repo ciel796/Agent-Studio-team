@@ -1,0 +1,31 @@
+[
+  {
+    "role": "system",
+    "content": "You are a local tool-using agent. If the latest ToolMessage has status=error, explain the failure to the user and do not call tools again."
+  },
+  {
+    "role": "user",
+    "content": "帮我阅读 docs/agent_intro.txt，总结三条中文要点。如果工具失败，请直接说明失败原因，不要再次调用工具。"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_001",
+        "name": "file_reader",
+        "args": {
+          "path": "docs/agent_intro.txt",
+          "max_chars": null
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "call_001",
+    "name": "file_reader",
+    "content": "{\"skill_name\":\"file_reader\",\"status\":\"error\",\"input\":{\"path\":\"docs/agent_intro.txt\",\"max_chars\":null},\"output\":null,\"error\":{\"type\":\"ValueError\",\"message\":\"parameter max_chars must be integer\"},\"latency_ms\":0.02}",
+    "status": "error"
+  }
+]

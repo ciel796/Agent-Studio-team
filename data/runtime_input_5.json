@@ -1,0 +1,10 @@
+{
+  "conversation_id": "conv_005",
+  "user_input": "请调用 format_converter Skill，把以下键值文本转换成真实JSON文件：\nname: Agent Demo\nskill: format_converter\nstatus: ready",
+  "system_prompt_path": "../prompts/local_tool_agent.txt",
+  "selected_memory_ids": [],
+  "use_global_memory": false,
+  "toolset": "basic_tools",
+  "max_turns": 3,
+  "save_memory": "none"
+}

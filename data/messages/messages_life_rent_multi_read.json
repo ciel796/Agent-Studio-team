@@ -1,0 +1,10 @@
+[
+  {
+    "role": "system",
+    "content": "You are a local tool-using agent. If tools are needed, you may request one or multiple tool calls in the same response when they are independent. After receiving ToolMessage results, decide whether to request more tools or provide the final answer."
+  },
+  {
+    "role": "user",
+    "content": "我正在做租房决策，请你同时阅读并对比以下文件，然后给出明确推荐：\n- docs/life_rent/requirements.md（我的需求）\n- docs/life_rent/listing_a.md\n- docs/life_rent/listing_b.md\n- docs/life_rent/listing_c.md\n- docs/life_rent/chat_log_noise.txt（看房聊天记录，内容很长且噪音很多）\n\n要求：\n1) 如果需要工具，请在同一轮尽量并行请求所有独立的工具调用（不要一条条来）。\n2) 输出一个决策表：通勤、预算、隔音/噪音、采光、做饭、收纳、宠物友好度、安全、风险项。\n3) 给每个房源打分（0-10）并解释扣分点。\n4) 给出推荐房源，并列出 3-5 条谈价/签约要点。\n"
+  }
+]

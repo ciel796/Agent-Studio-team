@@ -1,0 +1,130 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "calculator",
+      "description": "Calculate a safe arithmetic expression.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string",
+            "description": "Arithmetic expression using numbers and supported operators."
+          }
+        },
+        "required": ["expression"],
+        "additionalProperties": false
+      },
+      "x-returns": {
+        "type": "object",
+        "properties": {
+          "result": {"type": "number", "description": "Calculated value."}
+        }
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "file_reader",
+      "description": "Read a local UTF-8 txt or md file from the data directory.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Path relative to the configured data root."},
+          "max_chars": {"type": "integer", "description": "Maximum number of characters to return."}
+        },
+        "required": ["path"],
+        "additionalProperties": false
+      },
+      "x-returns": {
+        "type": "object",
+        "properties": {
+          "content": {"type": "string", "description": "File content."},
+          "num_chars": {"type": "integer", "description": "Returned character count."},
+          "source": {"type": "string", "description": "Normalized path relative to data root."},
+          "truncated": {"type": "boolean", "description": "Whether content was truncated."}
+        }
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "local_file_search",
+      "description": "Search local txt and md files for query terms.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "description": "Search query."},
+          "root_dir": {"type": "string", "description": "Directory relative to data root."},
+          "file_types": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "File extensions to search."
+          },
+          "top_k": {"type": "integer", "description": "Maximum number of matches."}
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      },
+      "x-returns": {
+        "type": "object",
+        "properties": {
+          "results": {"type": "array", "description": "Ranked paths, snippets, and scores."}
+        }
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "table_analyzer",
+      "description": "Analyze a local CSV or TSV file.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {"type": "string", "description": "Table path relative to data root."},
+          "max_rows_preview": {"type": "integer", "description": "Number of preview rows."},
+          "describe": {"type": "boolean", "description": "Whether to calculate numeric statistics."}
+        },
+        "required": ["path"],
+        "additionalProperties": false
+      },
+      "x-returns": {
+        "type": "object",
+        "properties": {
+          "num_rows": {"type": "integer", "description": "Data row count."},
+          "num_columns": {"type": "integer", "description": "Column count."},
+          "columns": {"type": "array", "description": "Column names."},
+          "preview": {"type": "array", "description": "First rows."},
+          "describe": {"type": "object", "description": "Numeric statistics by column."}
+        }
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "format_converter",
+      "description": "Convert text to markdown bullets or formatted JSON and write the converted content to a file.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {"type": "string", "description": "Input text."},
+          "target_format": {"type": "string", "description": "markdown or json."},
+          "output_filename": {"type": "string", "description": "Optional output filename. Defaults to converted.md or converted.json."}
+        },
+        "required": ["text", "target_format"],
+        "additionalProperties": false
+      },
+      "x-returns": {
+        "type": "object",
+        "properties": {
+          "formatted_text": {"type": "string", "description": "Converted text."},
+          "generated_file_path": {"type": "string", "description": "Path of the generated output file."}
+        }
+      }
+    }
+  }
+]

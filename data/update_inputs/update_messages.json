@@ -1,0 +1,5 @@
+[
+  {"role": "system", "content": "You are a helpful assistant."},
+  {"role": "user", "content": "请详细解释Agent是什么？"},
+  {"role": "assistant", "content": "Agent是一个能够自主感知环境、规划行动并执行任务的智能系统。它通常具备感知、决策和执行三个核心能力，广泛应用于自动化、机器人、对话系统等多个场景。"}
+]

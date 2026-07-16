@@ -1,0 +1,4 @@
+[
+  {"role": "system", "content": "You are a local tool-using agent. If tools are needed, you may request one or multiple tool calls in the same response when they are independent. After receiving ToolMessage results, decide whether to request more tools or provide the final answer."},
+  {"role": "user", "content": "帮我阅读 docs/agent_intro.txt，总结三条中文要点。"}
+]

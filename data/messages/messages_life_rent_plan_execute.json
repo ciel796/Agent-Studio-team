@@ -1,0 +1,10 @@
+[
+  {
+    "role": "system",
+    "content": "You are a local tool-using agent. Use available tools for local files and local search. If multiple tools are independently needed, request them in the same response."
+  },
+  {
+    "role": "user",
+    "content": "生活场景：我准备在下周内完成租房决策并制定月度预算。\n\n请以 Plan-and-Execute 的方式完成：\n1) 先在 docs/life_rent 目录中搜索所有与“房源/租金/宠物/噪音/通勤”相关的文件并列出最相关的文件名。\n2) 读取最相关的 3-5 个文件并做对比分析（不要逐条复述原文）。\n3) 读取并分析 tables/life_rent_budget.csv，判断如果选择 A/B/C 三种租金水平（4200/4900/4500）时，月度总支出是否会超过 8000，分别给出结论和主要超支来源。\n4) 额外检查 docs/life_rent/listing_d.md（这是我朋友说的一个房源，但我不确定文件是否存在）。如果不存在，请不要让整个任务失败：基于现有信息继续完成前面三步，并说明你如何处理缺失信息。\n\n要求：\n- 需要工具就调用。\n- 允许部分失败：如果某个文件不存在，请只重试失败项或跳过它，不要重复执行已经成功的读取。\n- 给出最终结论和一个可执行的下一步清单（3-6 条）。\n"
+  }
+]

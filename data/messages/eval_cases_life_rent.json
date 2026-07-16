@@ -1,0 +1,25 @@
+[
+  {
+    "id": "life_rent_multi_file_compare",
+    "title": "租房多文件对比",
+    "category": "life_rent",
+    "user_input": "请同时阅读 docs/life_rent/requirements.md、docs/life_rent/listing_a.md、docs/life_rent/listing_b.md、docs/life_rent/listing_c.md，并输出对比结论与推荐。请在同一轮并行请求所有独立的工具调用。",
+    "expected_tools": ["file_reader", "file_reader", "file_reader", "file_reader"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "life_rent_search_then_read",
+    "title": "先搜索再读取",
+    "category": "life_rent",
+    "user_input": "请先在 docs/life_rent 目录中搜索与“宠物”最相关的文件，然后读取最相关的 2 个文件并总结规则差异。",
+    "expected_tools": ["local_file_search", "file_reader", "file_reader"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "life_rent_budget_table",
+    "title": "租房预算表分析",
+    "category": "life_rent",
+    "user_input": "请分析 tables/life_rent_budget.csv 的列结构与预览内容，并判断其中哪些类别最可能导致超支（给出理由）。",
+    "expected_tools": ["table_analyzer"]
+  }
+]

@@ -1,0 +1,183 @@
+{
+  "batch_eval": {
+    "agent_mode": "adaptive_execute",
+    "toolset": "basic_tools",
+    "llm_mode": "prompt_json",
+    "max_turns": 3,
+    "max_plan_steps": 6,
+    "evidence_policy": "lite",
+    "save_memory": "none",
+    "tools_schema_source": "static",
+    "tools_schema_path": "./tools_schema_basic.json",
+    "forced_profile": "qwen_4b"
+  },
+  "cases": [
+  {
+    "id": "direct_answer_001",
+    "title": "直接回答类",
+    "category": "direct_answer",
+    "user_input": "请用一句中文解释什么是 tool calling。",
+    "expected_tools": []
+  },
+  {
+    "id": "direct_answer_002",
+    "title": "直接回答类-对比概念",
+    "category": "direct_answer",
+    "user_input": "请用三句话说明 ReAct 和 Plan-and-Execute 的区别。",
+    "expected_tools": []
+  },
+  {
+    "id": "direct_answer_003",
+    "title": "直接回答类-结构化输出",
+    "category": "direct_answer",
+    "user_input": "请用三条要点解释什么是 evidence（证据）约束，在 Agent 系统中有什么用。",
+    "expected_tools": []
+  },
+  {
+    "id": "single_tool_001",
+    "title": "单工具读取文档",
+    "category": "single_tool",
+    "user_input": "请读取 docs/agent_intro.txt，并给出三条中文要点。",
+    "expected_tools": ["file_reader"]
+  },
+  {
+    "id": "single_tool_003",
+    "title": "单工具读取文档-同义改写",
+    "category": "single_tool",
+    "user_input": "请查阅 docs/agent_intro.txt，用中文列出三条关键信息。",
+    "expected_tools": ["file_reader"]
+  },
+  {
+    "id": "single_tool_004",
+    "title": "单工具读取文档-查看",
+    "category": "single_tool",
+    "user_input": "请查看 docs/tool_calling.md，并用一句话总结其核心观点。",
+    "expected_tools": ["file_reader"]
+  },
+  {
+    "id": "single_tool_005",
+    "title": "单工具读取文档-不存在文件",
+    "category": "single_tool",
+    "user_input": "请读取 docs/THIS_FILE_SHOULD_NOT_EXIST_12345.txt，如果文件不存在请说明原因并给出你能做的替代方案。",
+    "expected_tools": ["file_reader"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "single_tool_002",
+    "title": "单工具计算",
+    "category": "single_tool",
+    "user_input": "请计算 23*17+9，如果需要工具请调用合适的计算工具。",
+    "expected_tools": ["calculator"]
+  },
+  {
+    "id": "single_tool_006",
+    "title": "单工具计算-复杂表达式",
+    "category": "single_tool",
+    "user_input": "请计算 (1024/8+37)*19-5，如果需要工具请调用合适的计算工具。",
+    "expected_tools": ["calculator"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "multi_tool_001",
+    "title": "多工具并行读取",
+    "category": "multi_tool",
+    "user_input": "请同时阅读 docs/agent_intro.txt 和 docs/tool_calling.md，比较两个文档的关注点差异。如果需要工具，请在同一轮并行请求。",
+    "expected_tools": ["file_reader", "file_reader"]
+  },
+  {
+    "id": "multi_tool_002",
+    "title": "多工具并行读取-同义改写",
+    "category": "multi_tool",
+    "user_input": "请并行读取 docs/agent_intro.txt 与 docs/tool_calling.md，各用一句话概括它们分别关注什么。",
+    "expected_tools": ["file_reader", "file_reader"]
+  },
+  {
+    "id": "multi_tool_003",
+    "title": "多工具并行读取-三文件",
+    "category": "multi_tool",
+    "user_input": "请在同一轮并行读取 docs/agent_intro.txt、docs/tool_calling.md、docs/tool_calling.md，并总结这些内容总体在讲什么。",
+    "expected_tools": [],
+    "expected_status": "needs_user",
+    "expected_question_contains": "重复读取"
+  },
+  {
+    "id": "planning_like_001",
+    "title": "规划倾向任务",
+    "category": "planning_like",
+    "user_input": "请先搜索 docs 目录中和 tool calling 最相关的文件，再读取最相关的结果并总结关键结论。",
+    "expected_tools": ["local_file_search", "file_reader"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "planning_like_002",
+    "title": "规划倾向任务-搜索记忆",
+    "category": "planning_like",
+    "user_input": "请先搜索 docs 目录中与 Memory 最相关的文件名或内容片段，再读取最相关的结果并总结。",
+    "expected_tools": ["local_file_search", "file_reader"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "planning_like_003",
+    "title": "规划倾向任务-先搜再读两篇",
+    "category": "planning_like",
+    "user_input": "请先搜索 docs 目录中与 Agent 系统组成相关的文件，然后读取前 2 个最相关文件并做对比总结。",
+    "expected_tools": ["local_file_search", "file_reader"],
+    "expected_match_type": "contains",
+    "expected_status": "needs_user"
+  },
+  {
+    "id": "table_tool_001",
+    "title": "表格分析任务",
+    "category": "table_analysis",
+    "user_input": "请分析 tables/results.csv 的列结构和预览内容。",
+    "expected_tools": ["table_analyzer"]
+  },
+  {
+    "id": "table_tool_002",
+    "title": "表格分析任务-省略前缀",
+    "category": "table_analysis",
+    "user_input": "请分析 results.csv 的列结构和预览内容。",
+    "expected_tools": ["table_analyzer"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "table_tool_003",
+    "title": "表格分析任务-描述统计",
+    "category": "table_analysis",
+    "user_input": "请对 tables/results.csv 进行列结构分析，并描述每列的含义（如果无法从数据推断请说明不确定性）。",
+    "expected_tools": ["table_analyzer"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "mixed_001",
+    "title": "混合任务-读文档再计算",
+    "category": "mixed",
+    "user_input": "请读取 docs/agent_intro.txt，统计内容字符数，并给出一句总结。",
+    "expected_tools": ["file_reader"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "mixed_002",
+    "title": "混合任务-先读再提取要点",
+    "category": "mixed",
+    "user_input": "请先读取 docs/tool_calling.md，然后提炼两条可以直接转化为工程约束的规则。",
+    "expected_tools": ["file_reader"]
+  },
+  {
+    "id": "guardrail_001",
+    "title": "护栏任务-路径存在性",
+    "category": "guardrail",
+    "user_input": "请检查 docs/agent_intro.txt 是否存在，如果存在请回答“存在”，如果不存在请回答“不存在”。",
+    "expected_tools": ["file_reader"],
+    "expected_match_type": "contains"
+  },
+  {
+    "id": "guardrail_002",
+    "title": "护栏任务-缺失文件也算结论",
+    "category": "guardrail",
+    "user_input": "请检查 docs/THIS_FILE_SHOULD_NOT_EXIST_12345.txt 是否存在，如果不存在请明确回答“不存在”，并说明你是如何确认的。",
+    "expected_tools": ["file_reader"],
+    "expected_match_type": "contains"
+  }
+  ]
+}

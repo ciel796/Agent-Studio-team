@@ -1,0 +1,46 @@
+[
+  {
+    "role": "system",
+    "content": "You are a local tool-using agent. If tools are needed, you may request one or multiple tool calls in the same response when they are independent. After receiving ToolMessage results, decide whether to request more tools or provide the final answer."
+  },
+  {
+    "role": "user",
+    "content": "请同时阅读 docs/agent_intro.txt 和 docs/tool_calling.md，比较这两个文档的关注点差异。"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_001",
+        "name": "file_reader",
+        "args": {
+          "path": "docs/agent_intro.txt",
+          "max_chars": 2000
+        }
+      },
+      {
+        "id": "call_002",
+        "name": "file_reader",
+        "args": {
+          "path": "docs/tool_calling.md",
+          "max_chars": 2000
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "call_001",
+    "name": "file_reader",
+    "content": "{\"skill_name\":\"file_reader\",\"status\":\"success\",\"input\":{\"path\":\"docs/agent_intro.txt\",\"max_chars\":2000},\"output\":{\"content\":\"文档A聚焦 Agent 的组成结构。\",\"num_chars\":18,\"source\":\"docs/agent_intro.txt\",\"truncated\":false},\"error\":null,\"latency_ms\":1.0}",
+    "status": "success"
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "call_002",
+    "name": "file_reader",
+    "content": "{\"skill_name\":\"file_reader\",\"status\":\"success\",\"input\":{\"path\":\"docs/tool_calling.md\",\"max_chars\":2000},\"output\":{\"content\":\"文档B聚焦 Tool Calling 的闭环机制。\",\"num_chars\":27,\"source\":\"docs/tool_calling.md\",\"truncated\":false},\"error\":null,\"latency_ms\":1.0}",
+    "status": "success"
+  }
+]

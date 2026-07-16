@@ -1,0 +1,10 @@
+{
+  "conversation_id": "conv_003",
+  "user_input": "请调用 local_file_search Skill 在 docs 目录搜索“检索演示 工具编排”，返回最相关文件路径和一句中文摘要。",
+  "system_prompt_path": "../prompts/local_tool_agent.txt",
+  "selected_memory_ids": [],
+  "use_global_memory": false,
+  "toolset": "basic_tools",
+  "max_turns": 3,
+  "save_memory": "none"
+}

@@ -1,0 +1,5 @@
+{
+  "model_config_path": "../configs/model.yaml",
+  "messages_path": "messages/messages_no_tool.json",
+  "tools_schema_path": "../outputs/B3_tools/tools_schema.json"
+}

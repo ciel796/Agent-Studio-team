@@ -1,0 +1,6 @@
+{
+  "query": "Agent",
+  "root_dir": "docs",
+  "top_k": 5,
+  "max_files": 5000
+}

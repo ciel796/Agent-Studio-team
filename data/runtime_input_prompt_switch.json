@@ -1,0 +1,29 @@
+{
+    "conversation_id":  "conv_prompt_switch_demo",
+    "user_inputs":  [
+                        "帮我阅读 docs/agent_intro.txt，总结三条中文要点。",
+                        "再读一次 docs/agent_intro.txt，继续总结三条中文要点。"
+                    ],
+    "system_prompt_path":  "../prompts/local_tool_agent.txt",
+    "system_prompt_events":  [
+                                 {
+                                     "user_turn_index":  1,
+                                     "mode":  "add",
+                                     "label":  "brief_answer_style",
+                                     "system_prompt_path":  "../prompts/brief_answer_prompt.txt"
+                                 },
+                                 {
+                                     "user_turn_index":  2,
+                                     "mode":  "switch",
+                                     "label":  "strict_tool_agent",
+                                     "system_prompt_path":  "../prompts/strict_tool_prompt.txt"
+                                 }
+                             ],
+    "selected_memory_ids":  [
+                                "mem_conversation_conv_000"
+                            ],
+    "use_global_memory":  true,
+    "toolset":  "basic_tools",
+    "max_turns":  3,
+    "save_memory":  "none"
+}

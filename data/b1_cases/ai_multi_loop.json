@@ -1,0 +1,5 @@
+[
+  {"role":"assistant","content":"","tool_calls":[{"id":"call_loop_1","name":"file_reader","args":{"path":"docs/agent_intro.txt","max_chars":1000}}]},
+  {"role":"assistant","content":"","tool_calls":[{"id":"call_loop_2","name":"calculator","args":{"expression":"6 * 7"}}]},
+  {"role":"assistant","content":"已完成两轮工具调用：读取 Agent 文档，并计算得到 42。","tool_calls":[]}
+]

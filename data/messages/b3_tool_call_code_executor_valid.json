@@ -1,0 +1,14 @@
+{
+  "tool_calls": [
+    {
+      "id": "call_code_001",
+      "name": "code_executor",
+      "args": {
+        "code": "import math\nprint('ready')\nmath.factorial(5)",
+        "timeout_seconds": 3,
+        "allowed_imports": ["math"],
+        "work_dir": "sandbox"
+      }
+    }
+  ]
+}

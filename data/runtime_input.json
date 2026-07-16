@@ -1,0 +1,10 @@
+{
+  "conversation_id": "conv_001",
+  "user_input": "帮我阅读 docs/agent_intro.txt，总结三条中文要点。",
+  "system_prompt_path": "../prompts/local_tool_agent.txt",
+  "selected_memory_ids": ["mem_conversation_conv_000"],
+  "use_global_memory": true,
+  "toolset": "basic_tools",
+  "max_turns": 3,
+  "save_memory": "conversation"
+}
