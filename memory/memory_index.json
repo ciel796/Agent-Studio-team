@@ -1,0 +1,274 @@
+{
+  "mem_course_001": {
+    "memory_id": "mem_course_001",
+    "memory_type": "global",
+    "title": "Agent 基础概念",
+    "summary": "Agent 系统由模型、工具、记忆和执行循环组成。",
+    "path": "global/mem_course_001.md",
+    "conversation_id": null,
+    "created_at": "2026-06-20T00:00:00+08:00",
+    "updated_at": "2026-06-20T00:00:00+08:00"
+  },
+  "mem_conversation_conv_000": {
+    "memory_id": "mem_conversation_conv_000",
+    "memory_type": "conversation",
+    "title": "Conversation conv_000",
+    "summary": "Agent（智能体）是一个能够自主感知环境、规划行动并执行任务的智能系统。它具备三个核心能力：\n1。感知（Perception）：通过传感器或输入接口获取环境信息\n2。",
+    "path": "conversations/conv_000.md",
+    "conversation_id": "conv_000",
+    "created_at": "2026-06-22T14:07:46+00:00",
+    "updated_at": "2026-07-06T16:50:01+08:00",
+    "change_type": "replaced",
+    "previous_overlap": 0.388
+  },
+  "mem_conversation_conv_001": {
+    "memory_id": "mem_conversation_conv_001",
+    "memory_type": "conversation",
+    "title": "帮我阅读 docs agent intro txt",
+    "summary": "第1轮回答：\n三条中文要点如下：\n1。Agent 系统通常由模型、工具、记忆和执行循环组成\n2。工具调用让模型能够读取本地文件、执行计算，并把结果用于后续回答\n3。",
+    "path": "conversations/conv_001.md",
+    "conversation_id": "conv_001",
+    "created_at": "2026-07-03T09:17:51+08:00",
+    "updated_at": "2026-07-09T17:30:40+08:00"
+  },
+  "mem_conversation_conv_plan_execute_001": {
+    "memory_id": "mem_conversation_conv_plan_execute_001",
+    "memory_type": "conversation",
+    "title": "请先搜索 docs 目录中与 tool calling",
+    "summary": "1. Tool Calling 模型负责决定是否调用工具，工具层负责校验和执行，运行时负责维护消息闭环。\n2. 工具编排强调模型先决定调用哪个工具，再由运行时执行工具并把 ToolMessage 返回给模型。\n3. Search Skill Demo 文档用于验证 local_file_search 工具，当用户询问相关检索问题时，搜索工具应能命中该文件。",
+    "path": "conversations/conv_plan_execute_001.md",
+    "conversation_id": "conv_plan_execute_001",
+    "created_at": "2026-07-10T15:51:52+08:00",
+    "updated_at": "2026-07-10T17:04:13+08:00"
+  },
+  "mem_conversation_conv_adaptive_execute_001": {
+    "memory_id": "mem_conversation_conv_adaptive_execute_001",
+    "memory_type": "conversation",
+    "title": "请先搜索 docs 目录中与 tool calling",
+    "summary": "基于搜索和读取的结果，关于 tool calling 的关键结论如下：\n\n1。**职责分工明确**：Tool Calling 模型负责决定是否调用工具，工具层负责校验和执行，运行时负责维护消息闭环。2。",
+    "path": "conversations/conv_adaptive_execute_001.md",
+    "conversation_id": "conv_adaptive_execute_001",
+    "created_at": "2026-07-10T16:04:06+08:00",
+    "updated_at": "2026-07-11T09:06:36+08:00"
+  },
+  "mem_conversation_conv_react_one_round_001": {
+    "memory_id": "mem_conversation_conv_react_one_round_001",
+    "memory_type": "conversation",
+    "title": "请先搜索 docs 目录中与 tool calling",
+    "summary": "1. Tool Calling 模型负责决定是否调用工具，工具层负责校验和执行，运行时负责维护消息闭环。\n2. 工具编排强调模型先决定调用哪个工具，再由运行时执行工具并把 ToolMessage 返回给模型。\n3. Search Skill Demo 文档用于验证 local_file_search 工具，当用户询问相关检索问题时，搜索工具应能命中该文件。",
+    "path": "conversations/conv_react_one_round_001.md",
+    "conversation_id": "conv_react_one_round_001",
+    "created_at": "2026-07-10T16:05:03+08:00",
+    "updated_at": "2026-07-10T16:05:03+08:00"
+  },
+  "mem_conversation_conv_web_20260711_212742_699037": {
+    "memory_id": "mem_conversation_conv_web_20260711_212742_699037",
+    "memory_type": "conversation",
+    "title": "你是谁",
+    "summary": "我是你的本地工具代理助手。我可以帮助你读取本地文件、搜索文件内容、分析表格数据、进行数学计算以及将文本转换为特定格式。我基于你提供的上下文和工具来协助你完成任务。",
+    "path": "conversations/conv_web_20260711_212742_699037.md",
+    "conversation_id": "conv_web_20260711_212742_699037",
+    "created_at": "2026-07-11T21:27:54+08:00",
+    "updated_at": "2026-07-11T21:27:54+08:00"
+  },
+  "mem_conversation_conv_web_20260711_212829_284099": {
+    "memory_id": "mem_conversation_conv_web_20260711_212829_284099",
+    "memory_type": "conversation",
+    "title": "12 25",
+    "summary": "37",
+    "path": "conversations/conv_web_20260711_212829_284099.md",
+    "conversation_id": "conv_web_20260711_212829_284099",
+    "created_at": "2026-07-11T21:28:30+08:00",
+    "updated_at": "2026-07-11T21:28:30+08:00"
+  },
+  "mem_conversation_conv_web_20260711_212951_971321": {
+    "memory_id": "mem_conversation_conv_web_20260711_212951_971321",
+    "memory_type": "conversation",
+    "title": "你能做什么",
+    "summary": "我可以帮您完成以下任务：\n\n1。**文件操作**：读取本地 txt 或 md 文件，查看文件内容\n2。**数据表格分析**：分析 CSV 或 TSV 文件，提供数据预览和统计信息\n3。",
+    "path": "conversations/conv_web_20260711_212951_971321.md",
+    "conversation_id": "conv_web_20260711_212951_971321",
+    "created_at": "2026-07-11T21:29:57+08:00",
+    "updated_at": "2026-07-11T21:29:57+08:00"
+  },
+  "mem_conversation_conv_web_20260711_213415_155491": {
+    "memory_id": "mem_conversation_conv_web_20260711_213415_155491",
+    "memory_type": "conversation",
+    "title": "计算 23 17 9 读取",
+    "summary": "计算结果：23 * 17 + 9 = 400\n\ndocs/agent_intro。txt 三点总结：\n1。Agent 系统通常由模型、工具、记忆和执行循环组成\n2。",
+    "path": "conversations/conv_web_20260711_213415_155491.md",
+    "conversation_id": "conv_web_20260711_213415_155491",
+    "created_at": "2026-07-11T21:34:44+08:00",
+    "updated_at": "2026-07-11T21:34:44+08:00"
+  },
+  "mem_conversation_conv_web_20260711_213759_857419": {
+    "memory_id": "mem_conversation_conv_web_20260711_213759_857419",
+    "memory_type": "conversation",
+    "title": "使用代码执行工具计算 1 到 100 的整数之和",
+    "summary": "1 到 100 的整数之和为 5050。",
+    "path": "conversations/conv_web_20260711_213759_857419.md",
+    "conversation_id": "conv_web_20260711_213759_857419",
+    "created_at": "2026-07-11T21:38:01+08:00",
+    "updated_at": "2026-07-11T21:38:01+08:00"
+  },
+  "mem_conversation_conv_web_20260711_213842_824556": {
+    "memory_id": "mem_conversation_conv_web_20260711_213842_824556",
+    "memory_type": "conversation",
+    "title": "使用代码执行工具计算 1 到 100 的整数之和",
+    "summary": "1 到 100 的整数之和是 **5050**。",
+    "path": "conversations/conv_web_20260711_213842_824556.md",
+    "conversation_id": "conv_web_20260711_213842_824556",
+    "created_at": "2026-07-11T21:38:45+08:00",
+    "updated_at": "2026-07-11T21:38:45+08:00"
+  },
+  "mem_global_conv_web_20260711_213859_566414": {
+    "memory_id": "mem_global_conv_web_20260711_213859_566414",
+    "memory_type": "global",
+    "title": "使用代码执行工具计算 1 到 100 的整数之和",
+    "summary": "1 到 100 的整数之和是 **5050**。",
+    "path": "global/conv_web_20260711_213859_566414.md",
+    "conversation_id": "conv_web_20260711_213859_566414",
+    "created_at": "2026-07-11T21:39:02+08:00",
+    "updated_at": "2026-07-11T21:39:02+08:00"
+  },
+  "mem_global_conv_web_20260711_233725_428978": {
+    "memory_id": "mem_global_conv_web_20260711_233725_428978",
+    "memory_type": "global",
+    "title": "请计算 1024 8 37 19",
+    "summary": "计算结果已获取：(1024/8+37)*19-5 = 3130.0\n\n**答案：3130**",
+    "path": "global/conv_web_20260711_233725_428978.md",
+    "conversation_id": "conv_web_20260711_233725_428978",
+    "created_at": "2026-07-11T23:37:42+08:00",
+    "updated_at": "2026-07-11T23:47:26+08:00"
+  },
+  "mem_conversation_conv_web_20260711_235115_449928": {
+    "memory_id": "mem_conversation_conv_web_20260711_235115_449928",
+    "memory_type": "conversation",
+    "title": "请读取 docs this file should",
+    "summary": "文件 `docs/THIS_FILE_SHOULD_NOT_EXIST_12345。txt` 不存在。**原因：**\n根据工具返回的错误信息，这是一个 `FileNotFoundError`，系统无法在数据根目录下的 `docs` 文件夹中找到该文件。",
+    "path": "conversations/conv_web_20260711_235115_449928.md",
+    "conversation_id": "conv_web_20260711_235115_449928",
+    "created_at": "2026-07-11T23:51:39+08:00",
+    "updated_at": "2026-07-11T23:54:11+08:00"
+  },
+  "mem_conversation_conv_web_20260712_000504_814121": {
+    "memory_id": "mem_conversation_conv_web_20260712_000504_814121",
+    "memory_type": "conversation",
+    "title": "请先搜索 docs 目录中与 agent 系统组成相关的文件",
+    "summary": "Agent 系统的基本组成要素及功能分工如下：\n\n1。**模型 (Model)**：Agent 的核心大脑，负责理解用户意图、规划任务、调用工具并生成回答。它具备推理、决策和语言生成的能力。",
+    "path": "conversations/conv_web_20260712_000504_814121.md",
+    "conversation_id": "conv_web_20260712_000504_814121",
+    "created_at": "2026-07-12T00:05:25+08:00",
+    "updated_at": "2026-07-12T00:14:18+08:00"
+  },
+  "mem_conversation_conv_web_20260712_113326_810408": {
+    "memory_id": "mem_conversation_conv_web_20260712_113326_810408",
+    "memory_type": "conversation",
+    "title": "请对 tables results csv 进行列结构分析",
+    "summary": "根据工具返回的结果，我已经获得了 tables/results。csv 的完整结构信息。 关键词: 根据工具返回的结果, 我已经获得了, tables, results, csv",
+    "path": "conversations/conv_web_20260712_113326_810408.md",
+    "conversation_id": "conv_web_20260712_113326_810408",
+    "created_at": "2026-07-12T11:34:13+08:00",
+    "updated_at": "2026-07-12T11:34:13+08:00"
+  },
+  "mem_conversation_conv_web_20260712_113620_239818": {
+    "memory_id": "mem_conversation_conv_web_20260712_113620_239818",
+    "memory_type": "conversation",
+    "title": "请对 tables results csv 进行列结构分析",
+    "summary": "根据工具返回的结果，我已经获得了 tables/results。csv 的完整结构信息。 关键词: 根据工具返回的结果, 我已经获得了, tables, results, csv",
+    "path": "conversations/conv_web_20260712_113620_239818.md",
+    "conversation_id": "conv_web_20260712_113620_239818",
+    "created_at": "2026-07-12T11:37:06+08:00",
+    "updated_at": "2026-07-12T11:37:06+08:00"
+  },
+  "mem_conversation_conv_web_20260713_210257_140333": {
+    "memory_id": "mem_conversation_conv_web_20260713_210257_140333",
+    "memory_type": "conversation",
+    "title": "请对docs中提到的agent做个总结",
+    "summary": "根据docs目录中的文档，Agent系统通常由以下核心组成部分：\n\n1. **模型**：负责处理任务、生成回答。\n2. **工具**：让模型能够读取本地文件、执行计算等外部操作，并将结果用于后续回答。\n3. **记忆 (Memory)**：为Agent提供全局知识和历史对话上下文。\n4. **执行循环**：协调上述组件，通过工具调用实现任务闭环。",
+    "path": "conversations/conv_web_20260713_210257_140333.md",
+    "conversation_id": "conv_web_20260713_210257_140333",
+    "created_at": "2026-07-13T21:03:57+08:00",
+    "updated_at": "2026-07-13T21:03:57+08:00"
+  },
+  "mem_conversation_conv_web_20260713_212410_256339": {
+    "memory_id": "mem_conversation_conv_web_20260713_212410_256339",
+    "memory_type": "conversation",
+    "title": "请对docs中提到的agent进行总结",
+    "summary": "Agent 系统总结报告\n\n1。核心组成\nAgent 系统通常由以下四个核心部分组成：\n- 模型：作为核心推理引擎，负责处理任务、生成回答。- 工具：扩展模型能力，使其能够读取本地文件、执行计算等操作，并将结果用于后续回答。",
+    "path": "conversations/conv_web_20260713_212410_256339.md",
+    "conversation_id": "conv_web_20260713_212410_256339",
+    "created_at": "2026-07-13T21:25:50+08:00",
+    "updated_at": "2026-07-13T21:25:50+08:00"
+  },
+  "mem_conversation_conv_web_20260713_213328_683558": {
+    "memory_id": "mem_conversation_conv_web_20260713_213328_683558",
+    "memory_type": "conversation",
+    "title": "请对docs中提到的agent进行总结",
+    "summary": "Agent 系统总结报告\n\n1。核心组成\nAgent 系统通常由以下四个核心部分组成：\n- 模型：作为核心推理引擎，处理输入输出，执行逻辑判断。- 工具：扩展模型能力，使 Agent 能够读取本地文件、执行计算等操作。",
+    "path": "conversations/conv_web_20260713_213328_683558.md",
+    "conversation_id": "conv_web_20260713_213328_683558",
+    "created_at": "2026-07-13T21:34:53+08:00",
+    "updated_at": "2026-07-13T21:34:53+08:00"
+  },
+  "mem_conversation_conv_web_20260713_214618_257647": {
+    "memory_id": "mem_conversation_conv_web_20260713_214618_257647",
+    "memory_type": "conversation",
+    "title": "请对docs中提到的agent进行总结",
+    "summary": "Agent 系统总结报告\n\n1。核心组成\nAgent 系统通常由以下四个核心部分组成：\n- 模型：作为核心推理引擎，负责处理任务、生成回答。- 工具：扩展模型的能力，使其能够读取本地文件、执行计算等操作，并将结果用于后续回答。",
+    "path": "conversations/conv_web_20260713_214618_257647.md",
+    "conversation_id": "conv_web_20260713_214618_257647",
+    "created_at": "2026-07-13T21:47:53+08:00",
+    "updated_at": "2026-07-13T21:47:53+08:00"
+  },
+  "mem_conversation_conv_web_20260713_222222_094429": {
+    "memory_id": "mem_conversation_conv_web_20260713_222222_094429",
+    "memory_type": "conversation",
+    "title": "请对docs中提到的tools进行总结",
+    "summary": "在 docs 目录中搜索关键词 'tool' 找到了 2 个相关文档：\n\n1。**docs/tool_calling。md** (匹配度 28。 关键词: 在, docs, 目录中搜索关键词, tool, 找到了",
+    "path": "conversations/conv_web_20260713_222222_094429.md",
+    "conversation_id": "conv_web_20260713_222222_094429",
+    "created_at": "2026-07-13T22:23:57+08:00",
+    "updated_at": "2026-07-13T22:29:12+08:00"
+  },
+  "mem_conversation_conv_web_20260713_230301_669986": {
+    "memory_id": "mem_conversation_conv_web_20260713_230301_669986",
+    "memory_type": "conversation",
+    "title": "请对docs中提到的agent进行总结",
+    "summary": "Agent 系统总结报告\n\n1。核心组成\nAgent 系统通常由以下四个核心部分组成：\n- 模型：作为核心推理引擎，负责处理任务、生成回答。- 工具：扩展模型的能力，使其能够读取本地文件、执行计算等操作，并将结果用于后续回答。",
+    "path": "conversations/conv_web_20260713_230301_669986.md",
+    "conversation_id": "conv_web_20260713_230301_669986",
+    "created_at": "2026-07-13T23:04:22+08:00",
+    "updated_at": "2026-07-13T23:04:22+08:00"
+  },
+  "mem_conversation_conv_web_20260713_231851_097293": {
+    "memory_id": "mem_conversation_conv_web_20260713_231851_097293",
+    "memory_type": "conversation",
+    "title": "请对docs中提到的agent进行总结",
+    "summary": "Agent 系统总结报告\n\n基于 docs/agent_intro。txt 中的内容，Agent 系统的核心组成如下：\n\n1。**模型 (Model)**: Agent 的核心大脑，负责处理任务、生成回答并调用工具。",
+    "path": "conversations/conv_web_20260713_231851_097293.md",
+    "conversation_id": "conv_web_20260713_231851_097293",
+    "created_at": "2026-07-13T23:20:12+08:00",
+    "updated_at": "2026-07-13T23:20:12+08:00"
+  },
+  "mem_conversation_conv_web_20260713_232835_585227": {
+    "memory_id": "mem_conversation_conv_web_20260713_232835_585227",
+    "memory_type": "conversation",
+    "title": "请对docs中提到的tools进行总结",
+    "summary": "在 docs 目录中搜索关键词 'tool' 找到了 2 个相关文档：\n\n1。**docs/tool_calling。md** (匹配度 28。 关键词: 在, docs, 目录中搜索关键词, tool, 找到了",
+    "path": "conversations/conv_web_20260713_232835_585227.md",
+    "conversation_id": "conv_web_20260713_232835_585227",
+    "created_at": "2026-07-13T23:33:57+08:00",
+    "updated_at": "2026-07-13T23:33:57+08:00"
+  },
+  "mem_conversation_conv_web_20260714_122040_640204": {
+    "memory_id": "mem_conversation_conv_web_20260714_122040_640204",
+    "memory_type": "conversation",
+    "title": "阅读docs目录里关于agent的文件 帮我总结三个要点",
+    "summary": "## 用户要求与偏好\n- 在本轮对话接下来所有输出结尾加一个英文test\n## 近期有效任务\n- 阅读docs目录里关于agent的文件 帮我总结三个要点\n- 从1+到100是多少",
+    "path": "conversations/conv_web_20260714_122040_640204.md",
+    "conversation_id": "conv_web_20260714_122040_640204",
+    "created_at": "2026-07-14T12:21:57+08:00",
+    "updated_at": "2026-07-14T12:22:11+08:00"
+  }
+}
