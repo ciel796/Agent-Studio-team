@@ -39,7 +39,7 @@ Agent Studio：本地文件驱动的工具增强型 Agent 系统
 
 | 模块 / 阶段 | 入口文件 / 入口函数 | 主要职责 | 输入 | 输出 |
 |---|---|---|---|---|
-| Web 交互层 | `ai_web/server.py`、`ai_web/server_1.py` | 提供对话、工具、记忆、批量任务、模型配置、执行追踪和评估页面 | HTTP 请求、用户指令、页面参数 | JSON API 响应、页面状态、`outputs/web_ui/` 运行产物 |
+| Web 交互层 | `ai_web/server_2.py` | 提供对话、工具、记忆、批量任务、模型配置、执行追踪和评估页面 | HTTP 请求、用户指令、页面参数 | JSON API 响应、页面状态、`outputs/web_ui/` 运行产物 |
 | B1 Agent Runtime | `code/b1_agent_runtime_1.py::run_agent`；基础兼容入口 `code/b1_agent_runtime.py` | 管理消息、执行模式、工具循环、多轮对话、checkpoint、历史压缩和最终产物 | runtime JSON、B3 Schema/ToolMessage、B4 AIMessage、B5 MemoryResult | `messages.json`、`trace.json`、`final_answer.md`、checkpoint 和日志 |
 | B2 Skills | `code/b2_run_skill.py::run_skill`、`skills/*.py` | 实现计算、文件读取/搜索、表格分析、格式转换、组合技能和受限代码执行 | 工具名与 JSON 参数 | 标准 `SkillResult` |
 | B3 Tool Layer | `code/b3_tool_layer_1.py::get_tools_schema`、`execute_tool_calls`；兼容入口 `code/b3_tool_layer.py` | 生成 Tools Schema、校验参数、执行 ToolCall、缓存/重试并封装 ToolMessage | `configs/tools.yaml`、AIMessage 中的 `tool_calls` | Tools Schema、`ToolMessage`、调用日志与统计 |
