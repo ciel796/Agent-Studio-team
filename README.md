@@ -56,9 +56,8 @@ Agent Studio：本地文件驱动的工具增强型 Agent 系统
 
 ### 2.2 系统架构图
 
-```markdown
-![Alt Text](images/image1.png)
-```
+![](images/image1.png)
+
 完整数据流为：
 
 ```text
