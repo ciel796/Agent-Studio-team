@@ -1,0 +1,25 @@
+.result-insights{margin:0 4.5vw 56px;padding:22px;background:#fff;border:1px solid var(--line);border-radius:6px}
+.result-module{color:var(--teal);font-size:12px;font-weight:800}
+.parameter-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:18px;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.parameter-item{min-height:82px;padding:14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fafbfc}
+.parameter-item span{display:block;margin-bottom:8px;color:var(--muted);font-size:11px;font-weight:800}
+.parameter-item strong{display:block;color:var(--ink);font-size:15px;line-height:1.45;overflow-wrap:anywhere}
+.parameter-item em{display:block;margin-top:5px;color:var(--muted);font-size:10px;font-style:normal;line-height:1.45}
+.result-detail{margin-top:18px}
+.detail-card{border:1px solid var(--line);border-radius:6px;background:#fafbfc}
+.detail-card-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line);background:#fff}
+.detail-card-head strong{font-size:14px}
+.detail-card-head span{color:var(--muted);font-size:11px;font-weight:700}
+.detail-table-wrap{overflow:auto}
+.eval-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:16px}
+.eval-model-card .comparison-table{min-width:720px}
+.comparison-table{width:100%;border-collapse:collapse;min-width:980px}
+.comparison-table th,.comparison-table td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:12px;line-height:1.55}
+.comparison-table th{background:#f3f6f8;color:var(--muted);font-size:11px;font-weight:800;white-space:nowrap}
+.comparison-table td{color:var(--ink)}
+.composite-note{margin-top:10px;padding:11px 12px;border-left:3px solid var(--amber);background:#fff7ef;color:#744116;font-size:12px;line-height:1.55}
+.system-state .online-state{display:flex;align-items:center;margin-bottom:10px}
+.system-state .online-state strong{color:#d6e0e8;font-size:11px}
+.system-state label{margin:0 0 5px;color:#81909e;font-size:10px}
+.system-state input{padding:7px 8px;border-color:#41505f;background:#101b27;color:#dce5eb;font:11px "Microsoft YaHei",sans-serif}
+@media(max-width:720px){.result-insights{margin:0 20px 40px}.parameter-row{grid-template-columns:1fr 1fr}.parameter-item strong{font-size:13px}.detail-card-head{align-items:flex-start;flex-direction:column}}

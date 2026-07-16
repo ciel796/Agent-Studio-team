@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Studio</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sidebar-bg: #111827;
+      --sidebar-hover: #1f2937;
+      --sidebar-text: #9ca3af;
+      --sidebar-active: #f3f4f6;
+      --accent: #0d9488;
+      --accent-light: #14b8a6;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-hover: #f1f5f9;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 8px 24px rgba(15,23,42,0.10);
+      --radius: 14px;
+      --radius-sm: 10px;
+    }
+    body {
+      font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+    }
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      padding: 16px 0;
+    }
+    .sidebar-brand {
+      padding: 0 20px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #374151;
+      margin-bottom: 10px;
+    }
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .brand-text {
+      color: #fff;
+      font-weight: 650;
+      font-size: 15px;
+      letter-spacing: 0.2px;
+    }
+    .sidebar-nav {
+      padding: 0 12px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--sidebar-text);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+      user-select: none;
+    }
+    .nav-item:hover { background: var(--sidebar-hover); color: #d1d5db; }
+    .nav-item.active { background: #374151; color: var(--sidebar-active); }
+    .nav-badge {
+      margin-left: auto;
+      font-size: 10px;
+      padding: 1px 7px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      font-weight: 650;
+    }
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 14px 20px;
+      border-top: 1px solid #374151;
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+    .model-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      padding: 6px 10px;
+      background: #1f2937;
+      border-radius: var(--radius-sm);
+      color: #9ca3af;
+      font-size: 11px;
+    }
+    .model-chip .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .top-bar {
+      height: 62px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow);
+    }
+    .page-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .status-chips {
+      display: flex;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .chip {
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .content {
+      flex: 1;
+      overflow: auto;
+      padding: 20px;
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .card-header {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .card-body { padding: 18px; }
+    .btn {
+      appearance: none;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 650;
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-danger-lite {
+      border-color: rgba(239,68,68,0.28);
+      color: #b91c1c;
+      background: rgba(239,68,68,0.08);
+    }
+    .btn-outline {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--ink);
+    }
+    .btn-row { display: flex; gap: 10px; align-items: center; }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 13px;
+      outline: none;
+      background: var(--surface);
+      color: var(--ink);
+    }
+    textarea { resize: none; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; }
+    th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 650;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+    }
+    .tag-success { border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.08); }
+    .tag-warning { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.10); }
+    .tag-danger { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.10); }
+    .grid-2 { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 340px; gap: 18px; align-items: start; }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel-header { padding: 14px 16px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 13px; }
+    .panel-body { padding: 14px 16px; }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+    .muted { color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .usage-guide { display: flex; flex-direction: column; gap: 14px; }
+    .guide-section { display: flex; flex-direction: column; gap: 8px; }
+    .guide-title { font-size: 13px; font-weight: 700; color: var(--ink); }
+    .guide-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #f8fafc;
+      padding: 12px;
+    }
+    .guide-list {
+      margin: 6px 0 0 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .guide-list li + li { margin-top: 4px; }
+    .guide-highlight {
+      background: rgba(13,148,136,0.08);
+      border-color: rgba(13,148,136,0.16);
+    }
+    .guide-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .guide-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .chat-side-panel {
+      align-self: start;
+      position: sticky;
+      top: 0;
+      max-height: calc(100vh - 122px);
+      overflow: hidden;
+    }
+    .chat-side-panel .panel {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-side-panel .panel-body {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .chat-side-panel .usage-guide {
+      padding-right: 4px;
+    }
+    .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 12px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .kpi-val { font-size: 22px; font-weight: 800; }
+    .kpi-label { margin-top: 4px; font-size: 11px; color: var(--muted); }
+    .chat-shell {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 620px;
+    }
+    .chat-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-header-left { display: flex; gap: 10px; align-items: center; }
+    .chat-header-title { font-weight: 800; font-size: 14px; }
+    .chat-header-sub { color: var(--muted); font-size: 12px; }
+    .chat-messages {
+      flex: 1;
+      overflow: auto;
+      padding: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .msg-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: 86%;
+    }
+    .msg-block.user {
+      align-self: flex-end;
+      align-items: flex-end;
+    }
+    .msg-block.assistant,
+    .msg-block.tool {
+      align-self: flex-start;
+      align-items: flex-start;
+    }
+    .msg {
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .msg-body { white-space: normal; }
+    .msg-paragraph + .msg-paragraph { margin-top: 10px; }
+    .msg-heading {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #0f172a;
+    }
+    .msg-heading-2 { font-size: 18px; margin-top: 4px; }
+    .msg-heading-3 { font-size: 16px; }
+    .msg-heading-4 { font-size: 14px; color: #334155; }
+    .msg-list {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+    .msg-list li + li { margin-top: 6px; }
+    .msg-body code {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-size: 12px;
+    }
+    .msg.user { align-self: flex-end; background: #f1f5f9; }
+    .msg.assistant { align-self: flex-start; background: #fff; }
+    .msg.tool { align-self: flex-start; background: #fffbeb; }
+    .msg-actions {
+      display: flex;
+      gap: 8px;
+      padding: 0 4px;
+    }
+    .msg-action-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.92);
+      color: var(--muted);
+      border-radius: 999px;
+      min-width: 30px;
+      height: 30px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.15s;
+      box-shadow: var(--shadow);
+    }
+    .msg-action-btn:hover {
+      color: var(--ink);
+      background: #fff;
+      border-color: #cbd5e1;
+    }
+    .msg-action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .msg-action-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+    .msg.thinking { color: var(--muted); }
+    .thinking-text { display: flex; align-items: center; min-height: 20px; }
+    .thinking-dots::after {
+      display: inline-block;
+      width: 1.5em;
+      content: "";
+      animation: thinking-dots 1.2s steps(4, end) infinite;
+    }
+    @keyframes thinking-dots {
+      0% { content: ""; }
+      25% { content: "."; }
+      50% { content: ".."; }
+      75%, 100% { content: "..."; }
+    }
+    .role-label { font-size: 10px; font-weight: 800; margin-bottom: 6px; color: var(--muted); letter-spacing: 0.03em; }
+    .process-panel {
+      margin: 0 16px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #f8fafc;
+      overflow: hidden;
+    }
+    .process-panel summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .process-panel summary::-webkit-details-marker { display: none; }
+    .process-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .process-stream {
+      border-top: 1px solid var(--border);
+      padding: 10px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 320px;
+      overflow: auto;
+    }
+    .process-item {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #dbe4ee;
+      background: #fff;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #1e293b;
+      display: flex;
+      align-items: flex-start;
+      white-space: pre-wrap;
+    }
+    .process-item.plan { background: #f8fafc; border-color: #cbd5e1; }
+    .process-item.active { background: #f0fdfa; border-color: #99f6e4; }
+    .process-item.completed { background: #f0fdf4; border-color: #86efac; }
+    .process-item.error { background: #fef2f2; border-color: #fca5a5; }
+    .process-item.ask_user { background: #eff6ff; border-color: #93c5fd; }
+    .process-note {
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #fde68a;
+      background: #fffbeb;
+      color: #92400e;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .process-empty {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 4px 2px;
+    }
+    .chat-input {
+      padding: 12px 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      background: var(--surface);
+    }
+    .chat-input textarea { height: 44px; }
+    .send-btn {
+      width: 120px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .send-btn.is-running {
+      background: rgba(239,68,68,0.10);
+      border-color: rgba(239,68,68,0.28);
+      color: #b91c1c;
+    }
+    .send-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.92;
+      display: none;
+    }
+    .send-btn.is-running .send-indicator {
+      display: inline-block;
+      animation: send-pulse 1.1s ease-in-out infinite;
+    }
+    @keyframes send-pulse {
+      0%, 100% { transform: scale(0.88); opacity: 0.45; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+    .form-inline { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .setting-help {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .setting-help.full {
+      grid-template-columns: 1fr;
+    }
+    .help-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #f8fafc;
+      padding: 10px 12px;
+    }
+    .help-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .help-card-text {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .timeline { display: flex; flex-direction: column; gap: 10px; }
+    .t-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: 44px 70px 1fr 70px;
+      gap: 10px;
+      align-items: start;
+      font-size: 12px;
+    }
+    .t-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+    .t-role { font-weight: 700; color: var(--muted); text-transform: lowercase; }
+    .t-meta { text-align: right; color: var(--muted); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .eval-overview {
+      margin-bottom: 18px;
+    }
+    .eval-top {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: start;
+    }
+    .eval-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .eval-card-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .eval-card-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .eval-card-body { padding: 16px; }
+    .metric-head {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      margin-bottom: 6px;
+    }
+    .metric-num {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .metric-num.success { color: #16a34a; }
+    .metric-num.danger { color: #dc2626; }
+    .metric-num.warning { color: #d97706; }
+    .metric-sub {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .plan-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .summary-stat {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfc 100%);
+      border-radius: 12px;
+      padding: 16px 14px;
+      text-align: left;
+    }
+    .summary-stat .value {
+      display: block;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f766e;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .summary-stat .label {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .eval-group-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .eval-model-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      overflow: hidden;
+    }
+    .eval-model-head {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .eval-model-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .eval-model-sub {
+      font-size: 11px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+    .eval-model-body {
+      padding: 10px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .eval-feature-note {
+      padding: 12px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e7edf4;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .eval-mode-row {
+      border: 1px solid #e7edf4;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 0.9fr));
+      gap: 12px;
+      align-items: center;
+    }
+    .eval-mode-meta {
+      min-width: 0;
+    }
+    .eval-mode-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+    .eval-mode-sub {
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .eval-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .eval-stat {
+      min-width: 0;
+    }
+    .eval-stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .eval-stat-value {
+      margin-top: 5px;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+    .eval-stat-sub {
+      margin-top: 4px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .eval-insight-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .eval-insight-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+    }
+    .eval-insight-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .eval-insight-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+    .eval-insight-grid {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .eval-insight-metric {
+      padding: 10px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e7edf4;
+    }
+    .eval-insight-metric .label {
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .eval-insight-metric .value {
+      margin-top: 4px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+    .eval-detail-toggle {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--ink);
+      list-style: none;
+    }
+    .eval-detail-toggle::-webkit-details-marker { display: none; }
+    .eval-detail-hint {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .eval-detail-table td {
+      vertical-align: middle;
+      font-size: 12px;
+    }
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: #fff7ed;
+      color: #b45309;
+    }
+    .mini-badge.plan { background: #fef3c7; color: #92400e; }
+    .mini-badge.multi { background: #fff7ed; color: #c2410c; }
+    .mini-badge.single { background: #fef3c7; color: #a16207; }
+    .mini-badge.qa { background: #f8fafc; color: #64748b; }
+    @media (max-width: 1100px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .eval-top { grid-template-columns: 1fr; }
+      .plan-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .eval-group-grid { grid-template-columns: 1fr; }
+      .eval-mode-row { grid-template-columns: 1fr; }
+      .eval-insight-grid { grid-template-columns: 1fr; }
+      .chat-side-panel {
+        position: static;
+        max-height: none;
+      }
+      .chat-side-panel .panel-body {
+        overflow: visible;
+      }
+      .sidebar { width: 220px; }
+      .sidebar { width: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">A</div>
+      <div class="brand-text">Agent Studio</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-page="chat">对话 <span class="nav-badge" id="nav-badge-chat">New</span></div>
+      <div class="nav-item" data-page="tools">工具管理</div>
+      <div class="nav-item" data-page="memory">记忆管理</div>
+      <div class="nav-item" data-page="batch">批量任务</div>
+      <div class="nav-item" data-page="config">模型配置</div>
+      <div class="nav-item" data-page="trace">执行追踪</div>
+      <div class="nav-item" data-page="eval">评估分析</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="sidebar-version">Agent v1.0</div>
+      <div class="model-chip"><span class="dot"></span><span id="sidebar-model">local</span></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top-bar">
+      <div class="page-title" id="page-title">对话</div>
+      <div class="status-chips">
+        <span class="chip" id="chip-mode">mode: -</span>
+        <span class="chip" id="chip-toolset">toolset: -</span>
+        <span class="chip" id="chip-model">model: -</span>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="page active" id="page-chat">
+        <div class="grid-3">
+          <div class="chat-shell">
+            <div class="chat-header">
+              <div class="chat-header-left">
+                <div>
+                  <div class="chat-header-title">新对话</div>
+                  <div class="chat-header-sub" id="chat-subtitle">mock / integrated 均可运行</div>
+                </div>
+              </div>
+              <div class="btn-row">
+                <button class="btn btn-outline" id="btn-chat-clear">清空</button>
+                <button class="btn btn-outline" id="btn-chat-load-latest">加载最近一次</button>
+              </div>
+            </div>
+            <div class="chat-messages" id="chat-messages"></div>
+            <details class="process-panel" id="process-panel">
+              <summary>
+                <span>执行步骤</span>
+                <span class="process-meta"><span id="process-status">空闲</span><span id="process-count">0 条</span></span>
+              </summary>
+              <div class="process-stream" id="process-stream">
+                <div class="process-empty">这里会按“执行计划 / 正在执行 / 已完成”的顺序显示步骤进度。</div>
+              </div>
+            </details>
+            <div class="chat-input">
+              <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+                <div class="form-inline">
+                  <select id="chat-agent-mode">
+                    <option value="plan_execute">先规划再执行</option>
+                    <option value="adaptive_execute">智能执行</option>
+                    <option value="integrated" selected>普通对话模式（快速）</option>
+                    <option value="react_one_round">单轮工具模式</option>
+                  </select>
+                  <select id="chat-llm-mode">
+                    <option value="prompt_json" selected>结构化输出（推荐）</option>
+                    <option value="adaptive">自动判断</option>
+                    <option value="native_tools">原生工具调用</option>
+                    <option value="mock">模拟模式</option>
+                  </select>
+                  <select id="chat-model-profile"></select>
+                  <select id="chat-save-memory">
+                    <option value="none">不保存记忆</option>
+                    <option value="conversation">只保存本次对话</option>
+                    <option value="global">保存到全局记忆</option>
+                  </select>
+                </div>
+                <details class="panel">
+                  <summary class="panel-header">高级运行设置</summary>
+                  <div class="panel-body stack">
+                    <div class="form-inline">
+                      <label>最大工具轮次 <input id="chat-max-turns" type="number" min="1" value="6" style="width:80px;" /></label>
+                      <label><input id="chat-history-enabled" type="checkbox" checked /> 单次运行历史压缩</label>
+                      <label>消息阈值 <input id="chat-history-max" type="number" min="4" value="12" style="width:80px;" /></label>
+                      <label>保留最近 <input id="chat-history-keep" type="number" min="1" value="4" style="width:80px;" /></label>
+                      <label><input id="chat-tool-cache" type="checkbox" checked /> 复用相同工具结果</label>
+                      <label><input id="chat-memory-summary-mode" type="checkbox" /> 记忆摘要模式</label>
+                    </div>
+                    <input id="chat-memory-ids" placeholder="指定 memory IDs，逗号分隔（可选）" />
+                    <textarea id="chat-system-events" class="mono" style="height:110px;" placeholder='System Prompt 事件 JSON，例如：[{"user_turn_index":2,"mode":"add","content":"回答保持简洁"}]'></textarea>
+                    <div id="memory-summary-context" class="panel-body muted">记忆摘要模式未开启</div>
+                  </div>
+                </details>
+                <textarea id="chat-input" placeholder="输入你的问题..."></textarea>
+              </div>
+              <button class="btn send-btn" id="btn-send" type="button">
+                <span class="send-indicator" id="btn-send-indicator" aria-hidden="true"></span>
+                <span id="btn-send-label">发送</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="stack chat-side-panel">
+            <div class="panel">
+              <div class="panel-header">使用说明</div>
+              <div class="panel-body">
+                <div class="usage-guide" id="panel-usage-guide"></div>
+                <div class="muted" id="panel-runtime" style="display:none;">等待运行</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-tools">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">工具管理</div>
+            <div class="btn-row">
+              <select id="tools-toolset" style="width:200px;"></select>
+              <button class="btn btn-outline" id="btn-tools-reload">重新加载</button>
+              <button class="btn btn-outline" id="btn-tools-auto">参数: tools_yaml</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="muted" id="tools-meta"></div>
+            <div style="height:12px;"></div>
+            <table>
+              <thead>
+                <tr>
+                  <th>工具名</th>
+                  <th>描述</th>
+                  <th>必选参数</th>
+                </tr>
+              </thead>
+              <tbody id="tools-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-batch">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">批量 Agent 任务</div>
+            <button class="btn" id="btn-batch-run">运行批量任务</button>
+          </div>
+          <div class="card-body stack">
+            <input id="batch-path" placeholder="服务器项目内 JSON 路径，例如 data/b1_cases/b1_all_features_batch.json" />
+            <textarea id="batch-json" class="mono" style="height:300px;" placeholder='{"tasks":[{"task_id":"demo","runtime_input":{"conversation_id":"batch_demo","user_input":"你好","system_prompt_path":"../../prompts/local_tool_agent.txt","toolset":"basic_tools","max_turns":3,"save_memory":"none"}}]}'></textarea>
+            <div class="muted">JSON 内容优先于文件路径，任务格式复用增强版 run_batch_tasks。</div>
+            <div id="batch-result" class="stack"><div class="muted">等待运行</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-memory">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">记忆检索</div>
+              <div class="btn-row">
+                <button class="btn btn-outline" id="btn-mem-mode">keyword</button>
+                <button class="btn btn-outline" id="btn-mem-search">搜索</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div style="display:flex;gap:10px;align-items:center;">
+                <input id="mem-query" placeholder="输入关键词..." />
+                <input id="mem-topk" value="5" style="width:90px;" />
+              </div>
+              <div style="height:12px;"></div>
+              <div class="stack" id="mem-results"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">记忆索引</div></div>
+            <div class="card-body">
+              <div class="muted" id="mem-index-meta"></div>
+              <div style="height:12px;"></div>
+              <table>
+                <thead>
+                  <tr><th>ID</th><th>类型</th><th>标题</th></tr>
+                </thead>
+                <tbody id="mem-index-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div style="height:16px;"></div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">更新与冲突管理</div></div>
+            <div class="card-body stack">
+              <input id="mem-update-id" placeholder="要更新的 memory_id" />
+              <select id="mem-conflict-strategy">
+                <option value="merge">合并补充/标记冲突</option>
+                <option value="ask">仅对比，等待人工决定</option>
+                <option value="replace">使用新内容替换</option>
+                <option value="skip">发生冲突时跳过</option>
+              </select>
+              <textarea id="mem-update-answer" style="height:150px;" placeholder="新的 answer / memory 内容"></textarea>
+              <button class="btn" id="btn-mem-update">对比并更新</button>
+              <pre id="mem-update-result" class="mono panel-body">等待操作</pre>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">错误 Memory 影响分析</div></div>
+            <div class="card-body stack">
+              <input id="mem-bad-id" placeholder="错误 memory_id" />
+              <input id="mem-good-id" placeholder="正确 memory_id" />
+              <input id="mem-impact-query" placeholder="用于最终回答的问题/关键词" />
+              <button class="btn" id="btn-mem-impact">分析影响</button>
+              <pre id="mem-impact-result" class="mono panel-body">等待分析</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-config">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">模型配置</div>
+              <div class="btn-row">
+                <button class="btn btn-outline" id="btn-config-reload">重新加载</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="stack">
+                <div>
+                  <div class="muted">configs/model.yaml</div>
+                  <div style="height:8px;"></div>
+                  <textarea id="config-model-yaml" class="mono" style="height:420px;"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">运行开关</div></div>
+            <div class="card-body">
+              <div class="stack">
+                <div class="panel">
+                  <div class="panel-header">说明</div>
+                  <div class="panel-body">
+                    <div class="muted">当前 UI 仅做展示与联调入口，具体开关以后端 configs 为准。</div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-header">Plan 状态</div>
+                  <div class="panel-body">
+                    <div class="muted" id="config-plan-state">暂无</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-trace">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">执行追踪</div>
+            <div class="btn-row">
+              <button class="btn btn-outline" id="btn-trace-load">加载最近一次</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="kpi-row" style="margin-bottom:14px;">
+              <div class="kpi"><div class="kpi-val" id="kpi-llm">-</div><div class="kpi-label">LLM Calls</div></div>
+              <div class="kpi"><div class="kpi-val" id="kpi-tools">-</div><div class="kpi-label">Tool Rounds</div></div>
+              <div class="kpi"><div class="kpi-val" id="kpi-tokens">-</div><div class="kpi-label">Tokens</div></div>
+              <div class="kpi"><div class="kpi-val" id="kpi-time">-</div><div class="kpi-label">耗时</div></div>
+              <div class="kpi"><div class="kpi-val" id="kpi-status">-</div><div class="kpi-label">Status</div></div>
+            </div>
+            <div class="timeline" id="trace-timeline"></div>
+            <div style="height:12px;"></div>
+            <div class="muted" id="trace-meta"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page" id="page-eval">
+        <div class="eval-overview eval-card">
+          <div class="eval-card-header">
+            <div class="eval-card-title">B4 模块 5 三模式评测概览</div>
+            <div class="btn-row">
+              <span class="metric-head">strict / usable</span>
+              <span class="metric-head">prompt / native / adaptive</span>
+            </div>
+          </div>
+          <div class="eval-card-body">
+            <div class="plan-summary-grid" id="eval-plan-summary"></div>
+          </div>
+        </div>
+        <div class="eval-top">
+          <div class="eval-card">
+            <div class="eval-card-header">
+              <div class="eval-card-title">按模型查看结果</div>
+              <span class="metric-head">每个模型仅展示最佳组合</span>
+            </div>
+            <div class="eval-card-body">
+              <div class="eval-group-grid" id="eval-single"></div>
+            </div>
+          </div>
+          <div class="eval-card">
+            <div class="eval-card-header">
+              <div class="eval-card-title">亮点解读</div>
+              <span class="metric-head" id="eval-plan-case-badge">精选 3 条</span>
+            </div>
+            <div class="eval-card-body">
+              <div class="eval-insight-list" id="eval-plan"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <details>
+              <summary class="eval-detail-toggle">完整明细（按需展开）</summary>
+              <div class="eval-detail-hint">默认只展示最强结果，下面保留完整 case 明细用于复核。</div>
+              <div style="height:14px;"></div>
+              <table class="eval-detail-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>标题</th>
+                    <th>类别</th>
+                    <th>期望工具</th>
+                    <th>实际工具</th>
+                    <th>匹配</th>
+                    <th>成功</th>
+                  </tr>
+                </thead>
+                <tbody id="eval-cases"></tbody>
+              </table>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="/app_1.js?v=20260714-6"></script>
+</body>
+</html>
